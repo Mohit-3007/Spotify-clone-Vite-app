@@ -7,7 +7,7 @@ import AlbumCard from "./AlbumCard";
 
 
 
-export default function SpotifyDashboard({DataFromMusicCard, play, stop}) {
+export default function SpotifyDashboard({DataFromMusicCard}) {
   const [songData, setSongData] = useState([]);
   const [albumData, setAlbumData] = useState([]);
   const [showPlayer, setShowPlayer] = useState(false);
@@ -74,8 +74,8 @@ export default function SpotifyDashboard({DataFromMusicCard, play, stop}) {
                         key={each._id}
                         musicObj={each}
                         DataFromMusicCard={DataFromMusicCard}
-                        play={play}
-                        stop={stop}
+                        // play={play}
+                        // stop={stop}
                       />
                   );
                 })}
