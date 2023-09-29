@@ -4,6 +4,9 @@ import Navbar from "./Navbar";
 import { TbPlayerPlayFilled } from "react-icons/tb";
 import { BsHeart } from "react-icons/bs";
 import { BiTime } from "react-icons/bi";
+import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai";
+import { FaFacebook } from "react-icons/fa6";
+
 
 export default function SongTrack() {
   const [musicObj, setMusicObj] = useState();
@@ -196,7 +199,12 @@ export default function SongTrack() {
                 </div>
                 {/* Music List- Map Function */}{" "}
                 {/* for index 0, bg-opacity-0 */}
-                <div className="w-[84.375rem]">
+                
+
+              </div>
+
+              <div className="w-[84.375rem]"> 
+
                   {musicObj?.album === undefined && (
                     <div className="w-[82.2188rem] h-[3.375rem] relative px-4 border-[0.0781rem] bg-opacity-0 border-transparent bg-[#121212] flex gap-4">
                       <div className="w-[1rem] h-[3.375rem] flex justify-center items-center">
@@ -244,10 +252,10 @@ export default function SongTrack() {
                               {each.title}
                             </span>
                             <span className="h-[1.4rem] flex gap-2">
-                              {each.artist?.map((eArtist, index) => {
+                              {each.artist?.map((eArtist) => {
                                 return (
                                   <CurrentSongArtists
-                                    index={index}
+                                    // key={eArtist}
                                     albumArtists={albumObj.artists}
                                     artistId={eArtist}
                                   />
@@ -264,8 +272,8 @@ export default function SongTrack() {
                         </div>
                       );
                     })}
+
                 </div>
-              </div>
 
               {/* Copy Right */}
               <div className="mt-8 w-[84.5rem] h-[3.5rem]  text-white">
@@ -285,50 +293,47 @@ export default function SongTrack() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* More by Artist */}
-            <div className="w-[87.5rem] h-[20.625rem] px-6">
-              <section className="w-[84.5rem] h-[20.625rem] mt-12 mb-4">
-                {/* More by Artist */}
-                <div className="w-[84.5rem] h-[2.875rem]">
-                  <div className="mb-4 w-[84.5rem] h-[1.875rem]">
-                    <h2 className="text-white font-bold text-2xl">
-                      More by {musicObj?.artist[0].name}
-                    </h2>
+              <div className="w-[87.5rem] h-[20.625rem] px-6">
+                <section className="w-[84.5rem] h-[20.625rem] mt-12 mb-4">
+                  {/* More by Artist */}
+                  <div className="w-[84.5rem] h-[2.875rem]">
+                    <div className="mb-4 w-[84.5rem] h-[1.875rem]">
+                      <h2 className="text-white font-bold text-2xl">
+                        More by {musicObj?.artist[0].name}
+                      </h2>
+                    </div>
                   </div>
-                </div>
 
-                {/* More Song Card of Artist */}
-                <div className="w-[84.5rem] h-280px flex flex-wrap gap-6">
-                  <MoreArtistSong musicObj={musicObj} headers={headers} />
-                </div>
-              </section>
-            </div>
-          </section>
+                  {/* More Song Card of Artist */}
+                  <div className="w-[84.5rem] h-280px flex flex-wrap gap-6">
+                    {/* <MoreArtistSong musicObj={musicObj} headers={headers} /> */}
+                  </div>
+                </section>
+              </div>
 
-          {/* Main_Footer_Container */}
-          <div className="w-[87.5rem] h-[24.25rem] mt-10">
+              <div className="w-[87.5rem] h-[24.25rem] mt-10 bg-[#121212]"> 
             <nav className="w-[87.5rem] h-[24.25rem] px-8 pt-2 pb-10">
+
               {/*Company Details, Community Details, other usefull links & Social Media Links */}
-              <div className="w-[83.5313rem] h-[14.625rem] mt-8">
+              <div className="w-[83.5313rem] h-[14.625rem] mt-8 flex">
                 {/*Company Details, Community Details, other usefull links  */}
                 <div className="w-[68.625rem] h-[14.625rem] flex">
                   {/* Company */}
                   <div className="w-[12.4375rem] h-[12.625rem] mb-8 mr-6">
                     <ul className="font-figtree flex flex-col">
                       <p className="text-white font-bold text-base">Company</p>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className="w-[2.8125rem] h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           About
                         </span>
                       </Link>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className="w-[2.8125rem] h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           Jobs
                         </span>
                       </Link>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className=" h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           For the Record
                         </span>
@@ -341,27 +346,27 @@ export default function SongTrack() {
                       <p className="text-white font-bold text-base">
                         Communities
                       </p>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className=" h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           For Artists
                         </span>
                       </Link>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className="w-[2.8125rem] h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           Developers
                         </span>
                       </Link>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className="w-[2.8125rem] h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           Adverstising
                         </span>
                       </Link>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className="w-[2.8125rem] h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           Investors
                         </span>
                       </Link>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
+                      <Link className="w-[2.8125rem] h-[1.625rem] my-2">
                         <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           Vendors
                         </span>
@@ -374,13 +379,13 @@ export default function SongTrack() {
                       <p className="text-white font-bold text-base">
                         Useful links
                       </p>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
-                        <span className="pb-2 bg-[#A7A7A7] text-base font-normal">
+                      <Link className="w-[2.8125rem] h-[1.625rem] my-2">
+                        <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           Support
                         </span>
                       </Link>
-                      <Link className="w-[2.8125rem] h-[1.625rem]">
-                        <span className="pb-2 bg-[#A7A7A7] text-base font-normal">
+                      <Link className="h-[1.625rem] my-2">
+                        <span className="pb-2 text-[#A7A7A7] text-base font-normal">
                           Free Mobile App
                         </span>
                       </Link>
@@ -389,19 +394,19 @@ export default function SongTrack() {
                 </div>
                 {/* Social Media Links */}
                 <div className="w-[9.5rem] h-[12.125rem] mb-10 flex">
-                  <div className="pr-4">
-                    <Link className="w-[2.5rem] h-[2.5rem] bg-[#292929] rounded-[50%] flex justify-center items-center">
-                      I
+                  <div className="w-[2.5rem] h-[2.5rem] mr-4 ">
+                    <Link className="w-[2.5rem] h-[2.5rem] bg-[#292929] rounded-[50%] hover:bg-[#a7a7a7] flex justify-center items-center">
+                      <AiOutlineInstagram className="h-6 w-6 text-white " />
                     </Link>
                   </div>
-                  <div className="pr-4">
-                    <Link className="w-[2.5rem] h-[2.5rem] bg-[#292929] rounded-[50%] flex justify-center items-center">
-                      I
+                  <div className="w-[2.5rem] h-[2.5rem] mr-4">
+                    <Link className="w-[2.5rem] h-[2.5rem] bg-[#292929] rounded-[50%] hover:bg-[#a7a7a7] flex justify-center items-center">
+                      <AiOutlineTwitter className="h-5 w-5 text-white"/>
                     </Link>
                   </div>
-                  <div className="pr-4">
-                    <Link className="w-[2.5rem] h-[2.5rem] bg-[#292929] rounded-[50%] flex justify-center items-center">
-                      I
+                  <div className="w-[2.5rem] h-[2.5rem] mr-4">
+                    <Link className="w-[2.5rem] h-[2.5rem] bg-[#292929] rounded-[50%] hover:bg-[#a7a7a7] flex justify-center items-center">
+                      <FaFacebook className="h-5 w-5 text-white" />
                     </Link>
                   </div>
                 </div>
@@ -410,7 +415,7 @@ export default function SongTrack() {
               <div className="w-[83.6063rem] h-[0.0781rem] mb-6 bg-white opacity-10"></div>
 
               {/*Legal, Cookies & Privacy Center  */}
-              <div className="w-[83.5313rem] h-[3.0625rem] flex justify-between pt-4">
+              <div className="w-[83.5313rem] h-[3.0625rem] flex justify-between pt-4 mb-10">
                 <div className="w-[31.75rem] h-[2.0625rem] flex">
                   <div className="h-[2.0625rem] mr-4 flex items-center justify-center">
                     <Link className="h-[1.4063rem] mb-2 text-[#A7A7A7] font-figtree font-normal text-sm">
@@ -451,8 +456,17 @@ export default function SongTrack() {
                   </div>
                 </div>
               </div>
+
             </nav>
           </div>
+            </div>
+
+            {/* More by Artist */}
+            
+          </section>
+
+          {/* Main_Footer_Container */}
+          
         </div>
       </div>
     </>
@@ -477,12 +491,12 @@ function MoreArtistSong({ musicObj, headers }) {
     }
     getArtistSongs();
   }, [fetchId]);
-  console.log("ARTIST OBJECT", artistobj);
+  // console.log("ARTIST OBJECT", artistobj);
 
   return (
     <>
-      {artistobj?.songs.map((each, index) => {  
-        return <MoreArtistSongCard songData = {each} index={index} />
+      {artistobj?.songs.splice(0,6).map((each, index) => {  
+        return <MoreArtistSongCard songData={each} index={index} />
       })}  
     </>
   )
@@ -490,6 +504,24 @@ function MoreArtistSong({ musicObj, headers }) {
 
 function MoreArtistSongCard({songData, index}) {
   const [hover, setHover] = useState(false);
+  const [year, setYear] = useState(0);
+
+  useEffect(() => {
+    function getYear() {
+      if (songData?.album === undefined) {
+        const dateOfCreation = songData.createdAt;
+        const date = new Date(dateOfCreation);
+        const fullYear = date.getFullYear();
+        setYear(fullYear);
+      } else {
+        const dateOfRelease = songData.dateOfRelease;
+        const date = new Date(dateOfRelease);
+        const fullYear = date.getFullYear();
+        setYear(fullYear);
+      }
+    }
+    getYear();
+  }, [songData]);
 
   function handleHoverState() {
     setHover(!hover);
@@ -497,55 +529,59 @@ function MoreArtistSongCard({songData, index}) {
 
   return (
     <div key={index} className={"w-[12.625rem] h-[17.5rem] relative p-4 flex flex-col rounded-lg cursor-pointer " + (hover ? "bg-[#282828]" : "bg-[#171717]")}>
+      <div className="w-[10.8125rem] h-[15.7188rem]">
 
-      {/* Image & PlayIcon */}
-      <div className="w-[10.625rem] h-[15.5rem]">
-        {/* Image */}
-        <div className="w-[10.625rem] h-[10.625rem] mb-4">
-          <div className="w-[10.625rem] h-[10.625rem] rounded-md overflow-hidden">
-            <img src={songData.thumbnail} alt="" />
+        {/* Image & PlayIcon */}
+        <div className="w-[10.8125rem] h-[10.8125rem] mb-4">
+          {/* Image */}
+          <div className="w-[10.8125rem] h-[10.8125rem]">
+            <div className="w-[10.8125rem] h-[10.8125rem] rounded-md overflow-hidden">
+              <img src={songData.thumbnail} alt="" />
+            </div>
           </div>
+          {/* Play Icon on hover */}
+          {hover && (
+            <div className={"w-12 h-12 bg-[#1ED760] rounded-[50%] absolute top-[141px] right-4 " + (hover ? "-translate-y-3" : "-translate-y-0")}>
+              <button className="w-12 h-12 flex justify-center items-center"
+              // onClick={sendDataToParent}
+              >
+                <span>
+                  {" "}
+                  <TbPlayerPlayFilled className="h-[1.375rem] w-[1.375rem]" />{" "}
+                </span>
+              </button>
+            </div>
+          )}  
         </div>
-        {/* Play Icon on hover */}
-        {hover && (
-          <div className={"w-12 h-12 bg-[#1ED760] rounded-[50%] absolute top-[141px] right-4 " + (hover ? "-translate-y-3" : "-translate-y-0")}>
-            <button className="w-12 h-12 flex justify-center items-center"
-            // onClick={sendDataToParent}
-            >
-              <span>
-                {" "}
-                <TbPlayerPlayFilled className="h-[1.375rem] w-[1.375rem]" />{" "}
-              </span>
-            </button>
-          </div>
-        )}  
+
+        {/* Title & Year */}
+        <div className="w-[10.8125rem] h-[3.875rem] flex flex-col justify-between">
+          <a className="w-[10.8125rem] h-[1.875rem] text-white font-bold text-base whitespace-nowrap overflow-hidden text-ellipsis flex items-center">{songData.title}</a>
+          <a className="w-[10.8125rem] h-[1.4rem] text-white text-sm flex items-center">{ year}</a>
+        </div>
+
+        {/* card click handler */}
+        <div
+          className="w-[12.625rem] h-[17.5rem] absolute left-0 top-0"
+          onMouseOver={handleHoverState}
+          onMouseLeave={handleHoverState}
+        ></div>
+
       </div>
-
-      {/* Title & Year */}
-      <div className="w-[10rem] h-[3.875rem]">
-        <a className="w-[10rem] h-[1.875rem] p-1 text-white text-base whitespace-nowrap overflow-hidden text-ellipsis">{songData.title }</a>
-      </div>
-
-      {/* card click handler */}
-      <div
-        className="w-[12.625rem] h-[17.5rem] absolute left-0 top-0"
-        onMouseOver={handleHoverState}
-        onMouseLeave={handleHoverState}
-      ></div>
-
     </div>
   )
 }
 
-function CurrentSongArtists({ index, albumArtists, artistId }) {
-  const singerName = albumArtists.filter((e, index) => {
+function CurrentSongArtists({ albumArtists, artistId }) {
+  
+  const singerName = albumArtists.filter((e) => {
     // console.log("Filter", e._id, "Artist Id", artistId);
     return e._id === artistId;
   });
   // console.log("SingerName", singerName);
+  console.log(artistId,"ARTIST IDDFDD");
   return (
     <Link
-      key={index}
       className="h-[1.4rem] flex items-end text-xs hover:underline"
     >
       {singerName[0].name}

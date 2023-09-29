@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import useSound from "use-sound";
 
 export default function Footer({ musicCardData }) {
-  const [play, { stop }] = useSound(musicCardData?.audio_url);
+  // const [play, { stop }] = useSound(musicCardData?.audio_url);
 
-  // console.log("Foooter", musicCardData);
+  console.log("Foooter", musicCardData);
   // function playMusic() {
   //   console.log("playmusic");
   //   play();
