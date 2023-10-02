@@ -35,6 +35,7 @@ export default function Home() {
     <>
       <Sidebar />
       {path !== "/songtrack" && <Navbar />} 
+      
       {path === "/" ? <SpotifyDashboard DataFromMusicCard={DataFromMusicCard}
         // play={play}
         // stopp={stop}

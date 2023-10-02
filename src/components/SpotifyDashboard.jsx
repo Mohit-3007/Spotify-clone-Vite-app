@@ -101,6 +101,8 @@ export default function SpotifyDashboard({DataFromMusicCard}) {
               </div>
             </section>
 
+            
+
           </div>
         </div>
       </div>
