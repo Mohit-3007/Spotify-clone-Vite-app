@@ -101,21 +101,6 @@ export default function SpotifyDashboard({DataFromMusicCard}) {
               </div>
             </section>
 
-            {/* Popular Artist */}
-            <section className="w-[84.5313rem] h-[20.5938rem]">
-                
-                <div className="w-[84.5313rem] h-[2.875rem]">
-                  <div className="w-[84.5313rem] h-[1.875rem] mb-4">
-                    <div className="w-[80.5938rem] h-[1.875rem]">
-                      <h2 className="w-[9.075rem] h-[1.4812rem] text-white font-bold text-2xl">Popular artists</h2>
-                    </div>
-                    <a></a>
-                  </div>
-                </div>
-                {/* Popular artist cards */}
-                <div className="w-[84.5313rem] h-[17.7125rem]"></div>
-            </section>
-
           </div>
         </div>
       </div>
