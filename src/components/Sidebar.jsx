@@ -13,7 +13,8 @@ export default function Sidebar() {
     if (decodeURIComponent(document.cookie)) {
       setLogin(true)
     }
-  },)
+    
+  })
   
   function handleExpand() {
     setExpanded(!expanded);

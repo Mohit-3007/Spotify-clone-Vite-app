@@ -307,7 +307,7 @@ export default function SongTrack() {
 
                   {/* More Song Card of Artist */}
                   <div className="w-[84.5rem] h-280px flex flex-wrap gap-6">
-                    {/* <MoreArtistSong musicObj={musicObj} headers={headers} /> */}
+                    <MoreArtistSong musicObj={musicObj} headers={headers} />
                   </div>
                 </section>
               </div>

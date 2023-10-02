@@ -27,10 +27,14 @@ export default function Navbar() {
     SetExpand(!expand);
   }
 
-  // function handleLogin() {
-  //   // console.log("Cookie remove");
-  //   // document.cookies.remove("data=; path=/;");
-  // }
+  function handleLogin() {
+    console.log("Cookie remove");
+    // document.cookies.remove("data=; path=/;");
+    document.cookie = "data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+
+
+  }
 
   return (
     <>
@@ -189,7 +193,7 @@ export default function Navbar() {
                       </button>
                     </li>
                     <li className="w-[11.75rem] h-[2.5rem]">
-                      <button className=" py-3 pl-3 pr-2 text-white text-sm font-semibold">
+                      <button className=" py-3 pl-3 pr-2 text-white text-sm font-semibold" onClick={handleLogin}>
                         <span>{loggedIn ? "Log out" : "Log in"}</span>
                       </button>
                     </li>
