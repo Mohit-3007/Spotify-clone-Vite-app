@@ -2,29 +2,23 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useState, useEffect } from "react";
+import { useContextProvider } from "./ContextProvider/AppContextProvider";
 
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
-  const [login, setLogin] = useState(false);
-
-  useEffect(() => {
-    if (decodeURIComponent(document.cookie)) {
-      setLogin(true)
-    }
-    
-  })
+  const { likedSongIds, login } = useContextProvider();
   
   function handleExpand() {
     setExpanded(!expanded);
   }
 
-
+  console.log("Liked Songs Array", likedSongIds)
 
   return (
     <>
-      <div className="w-[17.6875rem] h-[43.4714rem] text-white fixed top-2 left-2 ">
+      <div className="w-[17.6875rem] h-[695.5424px] text-white fixed top-2 left-2 ">
         <div className="py-2 px-3 h-[7rem] flex flex-col justify-center bg-[#121212] mb-2 rounded-lg">
           <div className="py-1 px-3 h-[2.5rem] flex items-center">
             <span>LG</span>
@@ -38,7 +32,7 @@ export default function Sidebar() {
 
         {login && (
           <>
-            <div className="h-[35.625rem] bg-[#121212] rounded-lg">
+            <div className="h-[35.5778rem] bg-[#121212] rounded-lg">
               {/* Your Library and playlist */}
               <div className="h-[6.5rem]">
                 <header className="py-2 px-4">
@@ -109,8 +103,26 @@ export default function Sidebar() {
                       </div>
                     </div>
                   </div>
-                  {/*  */}
-                  <div></div>
+                  {/* Liked Songs Div */}
+                  <div className="w-[16.6875rem]">
+                    <li className="w-[16.6875rem] h-[4rem] ">
+                      <div className="w-[16.6875rem] h-[4rem] p-2 flex justify-between">
+                        {/* on hover change bg */}
+                        <div></div>
+                        {/* Heart Div */}
+                        <div className="w-12 h-12 bg-blue-300">
+                          <svg></svg>
+                        </div>
+                        {/* Liked songs */}
+                        <div className="w-[11.9375rem] h-[3rem]">
+                          <div className="w-[8rem] h-[3rem]">
+                            <p className="w-[8rem] h-[1.5938rem]"><span className="text-white font-figtree text-base"> Liked Songs</span></p>
+                            <div className="w-[8rem] h-[1.4375rem] text-white">{likedSongIds?.songs?.length} Songs</div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </div>
 
                 </div>
               </div>
@@ -118,10 +130,11 @@ export default function Sidebar() {
           </>
         )}
 
+
         {!login && (     
           <>
             {/* Library_create playlist && Cookies and about us */}
-            <div className="h-[35.9778rem] bg-[#121212] rounded-lg relative">
+            <div className="h-[35.5778rem] bg-[#121212] rounded-lg relative">
 
               {/* Library and create playlist */}
               <div className="h-[22.5625rem]">

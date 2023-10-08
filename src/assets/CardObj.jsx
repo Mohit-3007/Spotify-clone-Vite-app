@@ -1,3 +1,7 @@
+import Footer from "../components/Footer";
+
+
+
 export default function CardObj() {
   const cardObj = [
     {
@@ -270,33 +274,40 @@ export default function CardObj() {
     <>
       {/* w-[87.4087rem] */}
       <div className="w-[87.4087rem] absolute top-[4.5rem] left-[18.6875rem] bg-[#121212]">
-        <div className="w-full px-6">
-          <div className="mt-4">
-            <div className="mb-4 h-[1.8125rem]">
-              <h2 className="text-white font-figtree font-bold text-2xl">
-                Browse all
-              </h2>
+        {/* Main Content */}
+        <div className="w-[87.4087rem]">
+          <div className="w-[87.4087rem] px-6">
+            {/*  */}
+            <div className="mt-4">
+              <div className="mb-4 h-[1.8125rem]">
+                <h2 className="text-white font-figtree font-bold text-2xl">
+                  Browse all
+                </h2>
+              </div>
             </div>
-          </div>
+            {/*  */}
+            <div className="w-full flex flex-wrap gap-5">
+              {cardObj.map((card, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{ backgroundColor: card.color }}
+                    className="w-[10.8125rem] h-[10.8125rem] rounded-xl py-4 px-3 text-center flex items-center justify-center">
+                      
+                    <span
+                      className="text-white font-figtree
+                            text-2xl font-semibold">
+                      {card.heading}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
 
-          <div className="w-full flex flex-wrap gap-5">
-            {cardObj.map((card, index) => {
-              return (
-                <div
-                  key={index}
-                  style={{ backgroundColor: card.color }}
-                  className="w-[10.8125rem] h-[10.8125rem] rounded-xl py-4 px-3 text-center flex items-center justify-center">
-                    
-                  <span
-                    className="text-white font-figtree
-                          text-2xl font-semibold">
-                    {card.heading}
-                  </span>
-                </div>
-              );
-            })}
           </div>
         </div>
+        {/* Footer */}
+        <Footer />
       </div>
     </>
   );

@@ -2,13 +2,16 @@ import "../styles/signup.css";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 
-export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+export default function Signup({handleEmail, handlePassword, handleName, email, password, name}) {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [name, setName] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    document.cookie=`email=${email}`
+    
     const signup = await fetch(
       "https://academics.newtonschool.co/api/v1/user/signup",
       {
@@ -35,7 +38,7 @@ export default function Signup() {
 
   return (
     <>
-      <div className="container">
+      <div className="container max-w-full">
         <div className="signup-container">
           <div className="header-container">
             <div className="logooo">
@@ -95,7 +98,7 @@ export default function Signup() {
                 type="email"
                 placeholder="Enter your email."
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => handleEmail(e.target.value)}
               />
               <span className="error"></span>
               <a className="useNumber" href="#">
@@ -111,7 +114,7 @@ export default function Signup() {
                 type="password"
                 placeholder="Create a password."
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => handlePassword(e.target.value)}
               />
               <span className="error"></span>
             </div>
@@ -124,7 +127,7 @@ export default function Signup() {
                 type="text"
                 placeholder="Enter a profile name."
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => handleName(e.target.value)}
               />
               <span className="error"></span>
               <div className="nameAppear">This appears on your profile.</div>

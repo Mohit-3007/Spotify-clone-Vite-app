@@ -1,0 +1,38 @@
+import { useState } from "react";
+import { BsSpotify } from "react-icons/bs";
+
+export default function PasswordReset(){
+
+
+    return (
+        <div className="w-screen h-screen bg-[#121212] absolute top-0 left-0">
+
+            {/* Logo */}
+            <header className="w-screen h-[6.3125rem] p-8 flex">
+                <BsSpotify className="text-white w-8 h-8" />
+                <span className="w-8 h-9 ml-6 text-xl font-figtree font-bold text-white flex justify-center items-center">Spotify</span>
+            </header>
+            {/* section */}
+            <section className="w-[73.125rem] min-h-[42rem] pb-8 mx-auto bg-[#121212] font-figtree text-white">
+                <div className="w-[28.125rem] h-[24rem] mx-auto bg-[#121212] flex flex-col">
+                    <h1 className="w-[28.125rem] h-[5.5rem] pb-8 font-extrabold flex text-5xl justify-center items-center">Passsword Reset</h1>
+                    <p className="w-[28.125rem] h-[6rem] pb-6 text-center text-base text-[#6a6a6a]">Enter your <b>Spotify username</b>, or the <b>email address</b> that you used to register. We'll send you an email with your username and a link to reset your password.</p>
+                    <form className="w-[28.125rem] h-[11rem]">
+                        <div className="w-[28.125rem] h-[6.5rem] pb-6">
+                            <div  className="w-[28.125rem] h-[1.75rem] pb-2"><label className="h-[1.25rem] text-sm font-bold">Email address or username</label></div>
+                            <input className="w-[28.125rem] h-[3.125rem] p-6 bg-inherit border-2 rounded border-[#878787] cursor-text" type="text" placeholder="Email address or username" />
+                        </div>
+                        <div className="w-[28.125rem] h-[4.5rem] pb-6 flex justify-center items-center">
+                            <button  className="w-[6.0625rem] h-12 relative">
+                                <div className="w-[6.0625rem] h-12 rounded-[31.25rem] bg-[#1ED760] hover:font-bold hover:scale-105 flex justify-center items-center text-black text-sm font-semibold">Send</div>
+                                {/* <div className="w-[6.0625rem] h-12 absolute top-0 left-0 rounded-[31.25rem] hover:font-bold hover:scale-125"></div> */}
+                            </button>
+                        </div>
+                    </form>
+                    <p className="w-[28.125rem] h-6"></p>
+                </div>
+            </section>
+
+        </div>
+    )
+}

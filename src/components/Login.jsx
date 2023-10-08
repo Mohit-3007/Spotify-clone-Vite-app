@@ -1,15 +1,20 @@
 import "../styles/login.css";
 import { useState, } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
+import { useContextProvider } from "./ContextProvider/AppContextProvider";
 
-export default function Login() {
 
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+export default function Login({handleEmail, handlePassword, email, password}) {
+
+    // const [email, setEmail] = useState()
+    // const [password, setPassword] = useState()
     const navigate = useNavigate()
+    const { handleLoginState } = useContextProvider();
 
     async function handleLogin() {
+
+      document.cookie=`email=${email}`
 
       const login = await fetch(
         "https://academics.newtonschool.co/api/v1/user/login",
@@ -28,11 +33,12 @@ export default function Login() {
       );
       const data = await login.json();
   
-      console.log(data);
+      console.log("Login data",data);
   
-      document.cookie = `data = ${data.token}`;
-      console.log(decodeURIComponent(document.cookie)); 
+      document.cookie = `data=${data.token}`;
+      // console.log(decodeURIComponent(document.cookie)); 
       if (data.status === "success") {
+        handleLoginState()
         navigate("/")
       }
       
@@ -77,13 +83,13 @@ export default function Login() {
               <div className="username-label">
                 <label htmlFor="email">Email</label>
               </div>
-              <input className="text-black" id="email" type="text" placeholder="Email" value={email} onChange={(e)=> setEmail(e.target.value)} />
+              <input className="text-black" id="email" type="text" placeholder="Email" value={email} onChange={(e)=> handleEmail(e.target.value)} />
             </div>
             <div className="login-password-div">
               <div className="username-password">
                 <label htmlFor="password">Password</label>
               </div>
-              <input className="text-black" id="password" type="text" placeholder="Password" password={password} onChange={(e)=> setPassword(e.target.value)} />
+              <input className="text-black" id="password" type="text" placeholder="Password" password={password} onChange={(e)=> handlePassword(e.target.value)} />
             </div>
             <div className="toogle">
               <label className="switch">
@@ -96,9 +102,11 @@ export default function Login() {
               <button className="button" onClick={handleLogin}>Log in</button>
             </div>
             <div className="forgotpass">
-              <a>
+              <Link 
+                to={"/passwordreset"}
+              >
                 <p>Forgot your Password?</p>
-              </a>
+              </Link>
             </div>
           </div>
 

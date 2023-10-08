@@ -10,12 +10,19 @@
   width: 100%;
 } */
 
+/* *{
+  background-color: white;
+} */
+
 .container {
+  /* width: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .signup-container {
@@ -24,6 +31,7 @@
   margin: 0 38.625rem;
   padding-bottom: 8.125rem;
   font-family: "Figtree", sans-serif;
+  background-color: white;
 }
 
 .header-container {
@@ -31,6 +39,7 @@
   padding: 2.5rem 0 2rem;
   width: 100%;
   text-align: center;
+  background-color: white;
 }
 
 .logooo {
@@ -86,6 +95,10 @@
   justify-content: center;
   text-decoration: none;
   color: rgb(83, 83, 83);
+}
+
+.facebook-logo , .facebook-logo p, .facebook-logo div , .facebook-logo div svg{
+  background-color: rgb(64, 90, 147);
 }
 
 .google-logo,

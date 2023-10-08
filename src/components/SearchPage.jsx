@@ -4,7 +4,7 @@ import { CiSearch } from 'react-icons/ci';
 import Navbar from "./Navbar";
 import CardObj from "../assets/CardObj";
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
+import Footer from "./MusicComponent";
 
 export default function SearchPage() {
 
