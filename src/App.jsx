@@ -65,6 +65,8 @@ function App() {
             <Route path="/more-excited" element={<Home />} />
             <Route path="/more-artist" element={<Home  />} />
             <Route path="/songtrack" element={<Home />} />
+            <Route path="/artist-track" element={<Home />} />
+            <Route path="/liked-songs" element={<Home />} />
             <Route path="/premium" element={<Premium />} />
           </Routes>
         </div>

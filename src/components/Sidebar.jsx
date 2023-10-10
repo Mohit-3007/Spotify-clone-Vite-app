@@ -3,15 +3,22 @@ import { CiSearch } from "react-icons/ci";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useState, useEffect } from "react";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
+import { BsHeartFill } from "react-icons/bs";
+import { AiTwotonePushpin } from "react-icons/ai";
 
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   const { likedSongIds, login } = useContextProvider();
+  const [hover, setHover] = useState(false)
   
   function handleExpand() {
     setExpanded(!expanded);
+  }
+
+  function handleHover(){
+    setHover(!hover)
   }
 
   console.log("Liked Songs Array", likedSongIds)
@@ -33,8 +40,10 @@ export default function Sidebar() {
         {login && (
           <>
             <div className="h-[35.5778rem] bg-[#121212] rounded-lg">
+
               {/* Your Library and playlist */}
               <div className="h-[6.5rem]">
+
                 <header className="py-2 px-4">
                     <div className="flex items-center h-[2.5rem]">
                       <div className="mr-[4.125rem]">
@@ -52,14 +61,18 @@ export default function Sidebar() {
                       </span>
                     </div>
                 </header>
+
                 <div className="h-12  ">
                   <div className="w-[4.6875rem] h-8 my-2 mx-4 bg-[#232323] rounded-3xl flex justify-center items-center"><span className="  text-sm">Playlists</span></div>
                 </div>
+
               </div>
+
               {/* Liked Songs */}
               <div className="h-[29.1563rem]">
                 <div className="h-[29.1563rem] pb-2 px-2">
-                  {/* Penidng */}
+
+                  {/* Penidng effects */}
                   <div className="h-[2.125rem] pt-0.5 px-2 flex justify-between mb-2.5 relative">
                     <div className="w-8 h-8 flex justify-center items-center text-lg"><CiSearch /></div>
                     <div className="w-[6.375rem] h-8 flex justify-center items-center" onClick={handleExpand}>
@@ -103,29 +116,43 @@ export default function Sidebar() {
                       </div>
                     </div>
                   </div>
+
                   {/* Liked Songs Div */}
                   <div className="w-[16.6875rem]">
-                    <li className="w-[16.6875rem] h-[4rem] ">
-                      <div className="w-[16.6875rem] h-[4rem] p-2 flex justify-between">
-                        {/* on hover change bg */}
-                        <div></div>
-                        {/* Heart Div */}
-                        <div className="w-12 h-12 bg-blue-300">
-                          <svg></svg>
-                        </div>
-                        {/* Liked songs */}
-                        <div className="w-[11.9375rem] h-[3rem]">
-                          <div className="w-[8rem] h-[3rem]">
-                            <p className="w-[8rem] h-[1.5938rem]"><span className="text-white font-figtree text-base"> Liked Songs</span></p>
-                            <div className="w-[8rem] h-[1.4375rem] text-white">{likedSongIds?.songs?.length} Songs</div>
+                    <ul className="list-none font-figtree">
+                      <li className={"w-[16.6875rem] h-[4rem] rounded-lg " + (hover ? "bg-[#4b4a4a]" : "bg-[#232323] ")}>
+                        <div className="w-[16.6875rem] h-[4rem] p-2 flex justify-between relative">
+
+                          {/* on hover change bg */}
+                          <div className="w-[16.6875rem] h-[4rem] absolute top-0 left-0" onClick={()=>navigate("/liked-songs")} onMouseEnter={handleHover} onMouseLeave={handleHover}></div>
+
+                          {/* Heart Div */}
+                          <div className="w-12 h-12 bg-gradient-to-br from-[#4507F4] to-[#B9DFDA] opacity-90 flex justify-center items-center">
+                            <BsHeartFill />
                           </div>
+
+                          {/* Liked songs number */}
+                          <div className="w-[11.9375rem] h-[3rem]">
+                            <div className="w-[100%] h-[3rem] flex flex-col justify-center">
+                              <p className="w-[100%] h-[1.5938rem]"><span className="text-white  text-base font-semibold"> Liked Songs</span></p>
+                              <div className="w-[100%] h-[1.4375rem] text-white">
+                                <p className="w-[100%] h-[1.4375rem] flex items-center ">
+                                  <span><AiTwotonePushpin className="fill-[#1ED760] mr-1" /></span>
+                                  <span className="text-sm text-[#919191] w-[100%] flex items-center">Playlist <b className="mx-1">.</b> {likedSongIds?.songs?.length} songs</span>
+                                  
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
-                      </div>
-                    </li>
+                      </li>
+                    </ul>
                   </div>
 
                 </div>
               </div>
+
             </div>
           </>
         )}

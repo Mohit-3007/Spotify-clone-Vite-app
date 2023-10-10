@@ -8,6 +8,7 @@ import { BsHeartFill } from "react-icons/bs";
 import { BiTime } from "react-icons/bi";
 import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa6";
+import LikedSongs from "./LikedSongs";
 
 
 
@@ -20,8 +21,6 @@ export default function SongTrack() {
   const [year, setYear] = useState(0);
   const [day, setDay] = useState(0);
   const [month, setMonth] = useState(0);
-  // const handleLikedSongs =location.state.handleLikedSongs;
-  // var year=0;
 
   const headers = {
     projectId: "nyiisjkwy2r6",
@@ -43,7 +42,9 @@ export default function SongTrack() {
   ];
 
   useEffect(()=>{
+    console.log(songData)
     setMusicObj(songData);
+    // checkAlbum()
   },[songData])
 
   useEffect(() => {
@@ -72,9 +73,9 @@ export default function SongTrack() {
   }, [musicObj]);
 
   async function checkAlbum() {
-    if (musicObj.album) {
+    if (songData?.album) {
       let resp = await fetch(
-        `https://academics.newtonschool.co/api/v1/music/album/${musicObj?.album}`,
+        `https://academics.newtonschool.co/api/v1/music/album/${songData?.album}`,
         {
           headers: headers,
         }
@@ -88,7 +89,7 @@ export default function SongTrack() {
   useEffect(() => {
     checkAlbum();
   }, []);
-  // console.log("albumObject", albumObj);
+  console.log("albumObject", albumObj);
 
   return ( 
     <>
@@ -98,21 +99,27 @@ export default function SongTrack() {
         <div>
           {/* Main_Music_Container */}
           <section className="w-[87.4087rem] font-figtree relative">
+
             {/* Music Thumbnail & Title */}
             <div className="w-[87.4087rem] px-6 pb-6 h-[21.25rem]  from relative">
+
               {/* BG- Color */}
               <div className="w-[87.4087rem] h-[21.25rem] bg-gradient-to-b from-[#2D99B8] to-[#154A59] absolute left-0 top-0"></div>
+
               {/* Album pic */}
               <button className="w-[14.5rem] h-[14.5rem] mr-6 z-10 absolute left-6 bottom-6 shadow-xl hover:scale-105">
                 <div className="w-[14.5rem] h-[14.5rem]">
                   <img src={musicObj?.thumbnail} alt="album pic" />
                 </div>
               </button>
+
               {/* Song details */}
               <div className="w-[68.5313rem] h-[19.75rem] absolute left-[17.5rem] bottom-6 flex flex-col justify-end text-white font-figtree">
+              
                 <span className="w-[68.5313rem] h-[1.375rem] text-sm absolute bottom-[148px]">
                   {musicObj?.album === undefined ? "Single" : "Album"}
                 </span>
+                {/* Title */}
                 <span className="w-[68.5313rem] h-[7.25rem] mt-2 absolute bottom-[32px]">
                   {/* <h1 className="mt-2 mb-3 w-[1096.5008px] h-[7.25rem] font-extrabold text-8xl whitespace-nowrap overflow-hidden text-ellipsis">{musicObj?.title}</h1> */}
                   <ResponsiveTitle
@@ -121,7 +128,9 @@ export default function SongTrack() {
                     title={musicObj?.title}
                   />
                 </span>
+
                 <div className="w-[68.5313rem] h-[1.625rem] mt-2 flex absolute bottom-0 text-sm">
+
                   {musicObj?.artist.map((each, index) => {
                     return (
                       <div
@@ -152,8 +161,11 @@ export default function SongTrack() {
                     {" "}
                     2 min 34 sec
                   </span>
+
                 </div>
+
               </div>
+
             </div>
 
             {/* Background Color */}
@@ -184,11 +196,13 @@ export default function SongTrack() {
             {/* List Items-(Map) & Copy Right */}
             {/* h-[12.5625rem] */}
             <div className="w-[87.5rem] px-6 max-h-fit absolute top-[28.75rem] bg-opacity-5 flex flex-col">
+
               {/* Title & Music List */}
               <div className="w-[84.375rem] max-h-fit border-[0.0781rem] border-transparent h-[6.875rem]">
                 {/* Title */}
                 <div className="w-[84.375rem] h-[2.25rem] mb-4 ">
                   <div className="w-[82.2188rem] h-[2.1719rem] border-b-[0.0781rem] border-b-[#1e3b43] px-4 flex relative text-[#B3B3B3]">
+
                     <div className="w-3 h-[2.1719rem] flex items-center mr-4">
                       #
                     </div>
@@ -198,14 +212,12 @@ export default function SongTrack() {
                     <div className="w-12 h-[2.1719rem] flex items-center absolute right-3">
                       <BiTime className="w-4.5 h-4.5" />
                     </div>
+
                   </div>
                 </div>
-                {/* Music List- Map Function */}{" "}
-                {/* for index 0, bg-opacity-0 */}
-                
-
               </div>
 
+              {/* Music List- Map Function */}{" "}  {/* for index 0, bg-opacity-0 */}
               <div className="w-[84.375rem]"> 
 
                   {musicObj?.album === undefined && (
@@ -274,9 +286,9 @@ export default function SongTrack() {
                           </div>
                         </div>
                       );
-                    })}
+                  })}
 
-                </div>
+              </div>
 
               {/* Copy Right */}
               <div className="mt-8 w-[84.5rem] h-[3.5rem]  text-white">
@@ -318,7 +330,6 @@ export default function SongTrack() {
               
               {/* Main_Footer_Container */}
               
-
             </div>    
           </section> 
         </div>
@@ -328,17 +339,35 @@ export default function SongTrack() {
 }
 
 function FavouriteIcon({musicObj}){
-  const { addRemoveFavourites, handleFavSongId }= useContextProvider();
+  const {  likedSongIds ,handleFavSongId }= useContextProvider();
   const [ selected, setSelected ]= useState(false);
+  const [path, setPath] = useState();
+  const location = useLocation()
+  useEffect(()=>{
+    setPath(location.pathname)
+  },[])
+  // console.log(musicObj?.title," ", path);
+
+  useEffect(()=>{
+    const isPresent = likedSongIds?.songs?.find((each)=>{
+      return each._id == musicObj?._id
+    })
+    if(isPresent) setSelected(!selected)
+  },[likedSongIds, path])
 
   function handleLikedState(songId){
     handleFavSongId(songId)
+    if(selected) setSelected(!selected)
+    // const isPresent = likedSongIds.songs.find((each)=>{
+    //   return each._id == songId
+    // })
+    // if(isPresent) setSelected(!selected)
   }
 
   return (
     <button className="w-8 h-14 mr-6" onClick={()=>handleLikedState(musicObj?._id)}>
       <span className="w-8 h-8 flex justify-center items-center" >
-        <BsHeartFill  className={"w-[2.9rem] h-[2.9rem] stroke-[#a7a7a7] stroke-1 hover:stroke-white hover:scale-105 " + (selected ? "fill-[#1ED760]" : "")} />
+        <BsHeartFill  className={"w-[2.9rem] h-[2.9rem] hover:stroke-white hover:scale-105 " + (selected ? "fill-[#1ED760]" : "")} />
       </span>
     </button>
     // style={{fill: 'red'}}
@@ -361,13 +390,15 @@ function MoreArtistSong({ musicObj, headers }) {
       const data = await resp.json();
       setArtistObj(data.data);
     }
-    getArtistSongs();
+    if(fetchId){
+      getArtistSongs();
+    }
   }, [fetchId]);
   // console.log("ARTIST OBJECT", artistobj);
 
   return (
     <>
-      {artistobj?.songs.splice(0,6).map((each) => { 
+      {artistobj?.songs?.splice(0,6).map((each) => { 
         return <MoreArtistSongCard key={each._id} songData={each} />
       })}  
     </>

@@ -7,7 +7,7 @@ import { FaFacebook } from "react-icons/fa6";
 export default function Footer(){
 
     return (
-        <div className="w-[87.4087rem] h-[24.25rem] mt-10 bg-[#121212] mb-[86px]"> 
+        <div className="w-[87.4087rem] h-[24.25rem] mb-[37.5rem] bg-[#121212] mb-[86px]"> 
             <nav className="w-[87.4087rem] h-[24.25rem] px-8 pt-2 pb-10">
                 {/*Company Details, Community Details, other usefull links & Social Media Links */}
                 <div className="w-[83.5313rem] h-[14.625rem] mt-8 flex">

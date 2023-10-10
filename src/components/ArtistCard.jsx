@@ -16,7 +16,7 @@ export default function ArtistCard({ artistObj }){
             key={artistObj._id}
             className={"w-[12.8125rem] h-[17.7125rem] p-4 relative rounded-2xl shadow-xl transition-all duration-1000 "
             + (hover ? "bg-[#282828]" : "bg-[#171717]")}
-            // to={"/songtrack"}
+            to={"/artist-track"}
             // state={{ musicDataObj: musicObj }}
         >
             <div className="w-[10.8125rem] h-[15.6875rem]">

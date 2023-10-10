@@ -21,12 +21,15 @@ function AppContextProvider({children}){
     }
     
     useEffect(()=>{
-      if(decodeURIComponent(document.cookie))
-      setLogin(true);
-      const allCookie = decodeURIComponent(document.cookie).split(";")
-      var token = allCookie[1].split("=")[1]
-      fetchFavourites(token);
-    },[])
+      if(decodeURIComponent(document.cookie)){
+
+        setLogin(true);
+        const allCookie = decodeURIComponent(document.cookie).split(";")
+        var token = allCookie[1].split("=")[1]
+        fetchFavourites(token);
+      }
+      
+    },[login])
 
     function handleFavSongId(songId){
       var token;
@@ -92,6 +95,14 @@ function AppContextProvider({children}){
       {title: "Heal Your Hearts", data: [], type: "mood", filterKey: "sad" },
       {title: "High Voltage Vibes", data: [], type: "mood", filterKey: "excited" },
     ])
+    
+    function handleMusicContextData({filterKey, payload}){
+      let updatedMusicList = musicContextList.map((eMusic)=>{
+        if(eMusic.filterKey === filterKey) eMusic.data = payload;
+        return eMusic;
+      })
+      setMusicContextList(updatedMusicList)
+    }
 
     // Pagination
     function handleIncPage(){
@@ -103,13 +114,6 @@ function AppContextProvider({children}){
       setPage((prev)=> prev - 1)
     }
   
-    function handleMusicContextData({filterKey, payload}){
-      let updatedMusicList = musicContextList.map((eMusic)=>{
-        if(eMusic.filterKey === filterKey) eMusic.data = payload;
-        return eMusic;
-      })
-      setMusicContextList(updatedMusicList)
-    }
     // console.log("Music Context List   ",musicContextList);
 
 

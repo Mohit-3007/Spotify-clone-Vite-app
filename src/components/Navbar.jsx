@@ -18,7 +18,8 @@ export default function Navbar() {
 
 
   useEffect(() => {
-    if(location.pathname === "/songtrack") setShowBackground(!showBackground)
+    let path = location.pathname
+    if( (path === "/songtrack" || path === "/liked-songs" || path === "/artist-track") ) setShowBackground(!showBackground)
   },[]);
 
   function handleExpand() {
@@ -138,6 +139,8 @@ export default function Navbar() {
                 location.pathname === "/featured" ||
                 location.pathname === "/morealbums" ||
                 location.pathname === "/songtrack" ||
+                location.pathname === "/liked-songs" ||
+                location.pathname === "/artist-track" ||
                 location.pathname === "/artistsongs") && (
                 <div className="w-[872px] mr-[1.125rem] ml-2"></div>
               )}

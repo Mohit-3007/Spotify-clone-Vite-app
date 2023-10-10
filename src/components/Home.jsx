@@ -7,6 +7,7 @@ import SpotifyDashboard from "./SpotifyDashboard";
 import Sidebar from "./Sidebar";
 import MusicComponent from "./MusicComponent";
 import SongTrack from "./SongTrack";
+import ArtistTrack from "./ArtistTrack";
 import MoreNewReleases from "./MoreSongs/MoreNewReleases";
 import MoreMade4U from "./MoreSongs/MoreMade4U";
 import MoreTrendingSongs from "./MoreSongs/MoreTrendingSongs"
@@ -17,6 +18,8 @@ import MoreRomantic from "./MoreSongs/MoreRomantic"
 import MoreSad from "./MoreSongs/MoreSad"
 import MoreExcited from "./MoreSongs/MoreExcited"
 import MoreArtist from "./MoreSongs/MoreArtist"
+import LikedSongs from "./LikedSongs";
+
 
 
 
@@ -32,7 +35,7 @@ export default function Home() {
   return (
     <>
       <Sidebar />
-      {path !== "/songtrack" && <Navbar />} 
+      {( path !== "/songtrack" || path !== "liked-songs" || path !== "/artist-track" ) && <Navbar />} 
 
       {path === "/" ? <SpotifyDashboard /> :
         path === "/more-made4u" ? <MoreMade4U /> :
@@ -45,6 +48,8 @@ export default function Home() {
         path === "/more-sad" ? <MoreSad /> :
         path === "/more-excited" ? <MoreExcited /> :
         path === "/more-artist" ? <MoreArtist /> :
+        path === "/liked-songs" ? <LikedSongs /> :
+        path === "/artist-track" ? <ArtistTrack /> :
         <SongTrack /> 
       }
       <MusicComponent /> 
