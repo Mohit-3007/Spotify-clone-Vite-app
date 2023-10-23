@@ -19,6 +19,8 @@ function AppContextProvider({children}){
     function handleLoginState(){
       setLogin(!login)
     }
+
+    console.log("USER LOGIN OR NOT ", login)
     
     useEffect(()=>{
       if(decodeURIComponent(document.cookie)){
@@ -28,8 +30,7 @@ function AppContextProvider({children}){
         var token = allCookie[1].split("=")[1]
         fetchFavourites(token);
       }
-      
-    },[login])
+    },[])
 
     function handleFavSongId(songId){
       var token;
@@ -84,25 +85,25 @@ function AppContextProvider({children}){
     // console.log("Liked Songs Ids data ",likedSongIds)
     
     // Context For Fetching More Music    
-    const [musicContextList, setMusicContextList] = useState([
-      {title: "Made For You", data: [], type: "made4u", filterKey: "made4u" },
-      {title: "Popular new releases", data: [], type: "release", filterKey: "-1" },
-      {title: "Trending Songs", data: [], type: "featured", filterKey: "Trending songs" },
-      {title: "Soul soother", data: [], type: "featured", filterKey: "Soul soother" },
-      {title: "Evergreen melodies", data: [], type: "featured", filterKey: "Evergreen melodies" },
-      {title: "Let's Party", data: [], type: "mood", filterKey: "happy" },
-      {title: "Top Romantic", data: [], type: "mood", filterKey: "romantic" },
-      {title: "Heal Your Hearts", data: [], type: "mood", filterKey: "sad" },
-      {title: "High Voltage Vibes", data: [], type: "mood", filterKey: "excited" },
-    ])
+    // const [musicContextList, setMusicContextList] = useState([
+    //   {title: "Made For You", data: [], type: "made4u", filterKey: "made4u" },
+    //   {title: "Popular new releases", data: [], type: "release", filterKey: "-1" },
+    //   {title: "Trending Songs", data: [], type: "featured", filterKey: "Trending songs" },
+    //   {title: "Soul soother", data: [], type: "featured", filterKey: "Soul soother" },
+    //   {title: "Evergreen melodies", data: [], type: "featured", filterKey: "Evergreen melodies" },
+    //   {title: "Let's Party", data: [], type: "mood", filterKey: "happy" },
+    //   {title: "Top Romantic", data: [], type: "mood", filterKey: "romantic" },
+    //   {title: "Heal Your Hearts", data: [], type: "mood", filterKey: "sad" },
+    //   {title: "High Voltage Vibes", data: [], type: "mood", filterKey: "excited" },
+    // ])
     
-    function handleMusicContextData({filterKey, payload}){
-      let updatedMusicList = musicContextList.map((eMusic)=>{
-        if(eMusic.filterKey === filterKey) eMusic.data = payload;
-        return eMusic;
-      })
-      setMusicContextList(updatedMusicList)
-    }
+    // function handleMusicContextData({filterKey, payload}){
+    //   let updatedMusicList = musicContextList.map((eMusic)=>{
+    //     if(eMusic.filterKey === filterKey) eMusic.data = payload;
+    //     return eMusic;
+    //   })
+    //   setMusicContextList(updatedMusicList)
+    // }
 
     // Pagination
     function handleIncPage(){
@@ -123,11 +124,7 @@ function AppContextProvider({children}){
         login: login,
         handleLoginState,
         likedSongIds: likedSongIds,
-        // setLikedSongIds,
         handleFavSongId,
-        // fetchFavourites,
-        musicContextList: musicContextList,
-        handleMusicContextData,
         page: page,
         handleIncPage,
         handleDecPage,

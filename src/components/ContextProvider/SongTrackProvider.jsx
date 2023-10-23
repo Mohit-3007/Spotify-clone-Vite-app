@@ -3,16 +3,18 @@ import { createContext, useContext, useState } from "react";
 const SongTrackContext = createContext(null);
 
 function SongTrackProvider({children}){
-    const [ songData, setSongData ] = useState();
+   const [showMusicPlayer, setShowMusicPlayer]  = useState(false);
 
-    function handleSetSongData(val){
-        setSongData(val)
-    }
+   function handleShowMusicPlayer(val){
+    setShowMusicPlayer(val)
+   }
 
     const obj={
-        songData: songData,
-        handleSetSongData,
+        showMusicPlayer: showMusicPlayer,
+        handleShowMusicPlayer,
     }
+
+    // console.log("Inside Song Track Provider  ", artistData);
 
 
     return <SongTrackContext.Provider value={obj}>{children}</SongTrackContext.Provider>

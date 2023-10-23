@@ -1,16 +1,42 @@
 import "../styles/signup.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useLoginCredentialProvider } from "./ContextProvider/LoginCredentialProvider";
 import { Icon } from "@iconify/react";
+import { BiHide } from "react-icons/bi";
 
-export default function Signup({handleEmail, handlePassword, handleName, email, password, name}) {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [name, setName] = useState("");
+
+export default function Signup() {
+  const { email, handleEmail, password, handlePassword, name, handleName } = useLoginCredentialProvider()
+  const [emailErrorMess, setEmailErrorMess] = useState("");
+  const [passwordErrorMess, setPasswordErrorMess] = useState("");
+  const [nameErrorMess, setNameErrorMess] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-    document.cookie=`email=${email}`
+    if (!emailRegex.test(email)) {
+      console.log("Invalid email");
+      // setEmailError(true)
+      setEmailErrorMess("This email is invalid. Make sure it's written like example@email.com");
+      return;
+    }
+
+     if(password.length < 6){
+      setPasswordErrorMess("Minimum length of password is 6")
+      return
+    }
+
+    if(name.length == 0){
+      setNameErrorMess("Please enter a valid Name")
+      return
+    }
+   
+    handleEmail("")
+    handleName("")
+    handlePassword("")
+
     
     const signup = await fetch(
       "https://academics.newtonschool.co/api/v1/user/signup",
@@ -27,19 +53,37 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
           appType: "music",
         }),
       }
-    );
-    const data = await signup.json();
-
-    console.log(data);
-
-    document.cookie = `data = ${data.token}`;
-    console.log(decodeURIComponent(document.cookie));
+      );
+      const data = await signup.json();
+      
+      console.log(data);
+      // if(data.status === "success"){
+      //   document.cookie=`email=${email}`
+      //   document.cookie = `data = ${data.token}`;
+      // }
+    console.log("DOCUMENT...COOKIE ",decodeURIComponent(document.cookie));
   }
+
+  
+  function handleEmailInput(){
+    setEmailErrorMess("")
+  }
+
+  function handlePasswordInput(){
+    setPasswordErrorMess("")
+  }
+
+  function handleNameInput(){
+    setNameErrorMess("")
+  }
+
 
   return (
     <>
       <div className="container max-w-full">
         <div className="signup-container">
+
+          {/* Header Container */}
           <div className="header-container">
             <div className="logooo">
               <img
@@ -53,6 +97,8 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
 
             <h2>Sign up for free to start listening.</h2>
           </div>
+
+          {/* facebook-signup */}
           <div className="facebook-signup">
             <a
               target="_blank"
@@ -67,6 +113,8 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
               </span>
             </a>
           </div>
+
+          {/* google-signup */}
           <div className="google-signup">
             <a
               target="_blank"
@@ -81,6 +129,8 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
               </span>
             </a>
           </div>
+
+          {/* formDivider */}
           <div className="formDivider">
             <div className="formbreak">
               <div className="breakline brleft"></div>
@@ -88,50 +138,70 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
               <div className="breakline brright"></div>
             </div>
           </div>
+
+          {/* signup-form */}
           <form onSubmit={(e) => handleSubmit(e)} className="signup-form">
+
+            {/* email-container */}
             <div className="email-container formPadding">
+
               <div className="emailText">
                 <label htmlFor="email">What's your email?</label>
               </div>
+
               <input
-                id="email"
+                id="emaill"
+                className={"input " + (emailErrorMess ? "border-red-600 border-solid border" : "border-black border-solid border")}
                 type="email"
                 placeholder="Enter your email."
                 value={email}
                 onChange={(e) => handleEmail(e.target.value)}
+                onClick={handleEmailInput}
               />
-              <span className="error"></span>
-              <a className="useNumber" href="#">
-                Use phone number instead.
-              </a>
+
+              <span className={"error " + (emailErrorMess ? "block" : "hidden")}>{emailErrorMess}</span>
+          
             </div>
+
+            {/* password-container */}
             <div className="password-container formPadding">
               <div className="passwordText">
                 <label htmlFor="password">Create a password</label>
               </div>
               <input
-                id="password"
+                id="passwordd"
+                className={"input " + (passwordErrorMess ? "border-red-600 border-solid border" : "border-black border-solid border")}
                 type="password"
                 placeholder="Create a password."
                 value={password}
                 onChange={(e) => handlePassword(e.target.value)}
+                onClick={handlePasswordInput}
               />
-              <span className="error"></span>
+              <span className={"error " + (passwordErrorMess ? "block" : "hidden")}>{passwordErrorMess}</span>
             </div>
+
+            {/* name-container */}
             <div className="name-container formPadding">
+
               <div className="nameText">
                 <label htmlFor="name">What should we call you?</label>
               </div>
+
               <input
                 id="name"
+                className={"input " + (nameErrorMess ? "border-red-600 border-solid border" : "border-black border-solid border")}
                 type="text"
                 placeholder="Enter a profile name."
                 value={name}
                 onChange={(e) => handleName(e.target.value)}
+                onClick={handleNameInput}
               />
-              <span className="error"></span>
+
+              <span className={"error " + (nameErrorMess ? "block" : "hidden")}>{nameErrorMess}</span>
               <div className="nameAppear">This appears on your profile.</div>
             </div>
+
+            {/* dob-container */}
             <div className="dob-container formPadding">
               <div className="dobText">
                 <label>What's your date of birth?</label>
@@ -174,6 +244,7 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
               <span></span>
             </div>
 
+            {/* gender-container */}
             <div className="gender-container formPadding">
               <div className="genderText">
                 <label>What's your gender?</label>
@@ -217,6 +288,7 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
               </div>
             </div>
 
+            {/* term-1 */}
             <div className="terms">
               <div className="termContainer">
                 <input type="checkbox" />
@@ -226,6 +298,7 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
               </div>
             </div>
 
+            {/* term-2 */}
             <div className="terms">
               <div className="termContainer">
                 <input type="checkbox" />
@@ -236,10 +309,28 @@ export default function Signup({handleEmail, handlePassword, handleName, email, 
               </div>
             </div>
 
-            <button className="bg-green-400 text-white p-4" type="submit">
-              Sign up
-            </button>
+            {/* Button */}
+           <div className="w-full flex justify-center mb-6">
+            <button className="w-[20.25rem] rounded-[500px] bg-[#1ED760] font-figtree text-black font-bold p-4" type="submit">
+                Sign up
+              </button>
+           </div>
+
+           <p className="w-full mb-6">
+            <span className="flex justify-center items-center">
+              Already have an account? <Link to={"/login"} className="text-black ml-1 underline font-semibold text-base">Log in here.</Link>
+            </span>
+           </p>
+
+           <p className="w-full flex flex-col justify-center items-center">
+            <div className="w-fit text-xs">This site is protected by reCAPTCHA and the Google</div>
+            <div className="w-fit text-xs">
+              <a href="https://policies.google.com/privacy" target="_blank" className="underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" className="underline">Terms of Service</a> apply.
+            </div>
+           </p>
+
           </form>
+
         </div>
       </div>
     </>

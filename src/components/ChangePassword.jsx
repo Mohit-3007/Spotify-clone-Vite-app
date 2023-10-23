@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useLoginCredentialProvider } from "./ContextProvider/LoginCredentialProvider";
 import { BsSpotify } from "react-icons/bs";
 
-export default function ChangePassword({name}){
+export default function ChangePassword(){
     const [firstName, setFirstName] = useState("");
     const [currPass, setCurrPass] = useState("");
     const [newPass, setNewPass] = useState("");
     const [repNewPass, setRepNewPass] = useState("");
+    const { name } = useLoginCredentialProvider()
 
     let allCookie = decodeURIComponent(document.cookie).split(";")
 

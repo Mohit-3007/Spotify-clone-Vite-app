@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, Routes, Route } from "react-router-dom";
 import useSound from "use-sound";
 import Navbar from "./Navbar";
@@ -19,14 +19,28 @@ import MoreSad from "./MoreSongs/MoreSad"
 import MoreExcited from "./MoreSongs/MoreExcited"
 import MoreArtist from "./MoreSongs/MoreArtist"
 import LikedSongs from "./LikedSongs";
-
-
+import BottomBar from "./BottomBar";
+import { useContextProvider } from "./ContextProvider/AppContextProvider";
 
 
 
 export default function Home() {
+  const { login } = useContextProvider();
   const location = useLocation();
-  const [path, setPath] = useState("");
+  const [path, setPath] = useState("")
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      console.log("resizing........")
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => { 
     setPath(location.pathname)
@@ -35,9 +49,13 @@ export default function Home() {
   return (
     <>
       <Sidebar />
-      {( path !== "/songtrack" || path !== "liked-songs" || path !== "/artist-track" ) && <Navbar />} 
+      {/* For small screens*/}
+      {login && screenWidth > 640 ? <Navbar /> : null}
+      
+      {!login && <Navbar /> }
 
-      {path === "/" ? <SpotifyDashboard /> :
+     
+      { path === "/" ? <SpotifyDashboard /> :
         path === "/more-made4u" ? <MoreMade4U /> :
         path === "/more-new-releases" ? <MoreNewReleases /> :
         path === "/more-trending-songs" ? <MoreTrendingSongs /> :
@@ -52,7 +70,12 @@ export default function Home() {
         path === "/artist-track" ? <ArtistTrack /> :
         <SongTrack /> 
       }
-      <MusicComponent /> 
+     
+      <MusicComponent />
+
+      {/* For small screens*/}
+      {login && screenWidth < 640 ? <BottomBar /> : null}
+
     </>
   );
 }

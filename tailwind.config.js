@@ -5,8 +5,16 @@ export default {
     extend: {
       fontFamily: {
         figtree : ['Figtree', 'sans-serif']
-      }
+      },
+      screens: {
+        '3xl': '1500px',
+      },
     },
+    corePlugins: {
+      // ...
+      flex: true,
+    },
+   
   },
   plugins: [
     require('tailwind-scrollbar'),

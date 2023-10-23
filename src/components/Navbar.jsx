@@ -1,105 +1,148 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import ReactDOM from 'react-dom';
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
-import { BsArrowDownCircle } from "react-icons/bs";
-import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
+import { BsArrowDownCircle, BsSpotify, BsSearch } from "react-icons/bs";
+import { IoChevronBackOutline, IoChevronForwardOutline, IoReorderThree } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { FiExternalLink } from "react-icons/fi";
 import { GoBellFill, GoPersonFill } from "react-icons/go";
+import { useSongTrack } from "./ContextProvider/SongTrackProvider";
+import { RxCross1 } from "react-icons/rx";
 
-export default function Navbar() {
-  const logoutRef = useRef();
-  const [expand, SetExpand] = useState(false);
+ const Navbar = () => {
+ 
+  const [expand, setExpand] = useState(false);
   const location = useLocation();
   const { handleLoginState, login } = useContextProvider();
   const navigate = useNavigate();
-  const [showBackground, setShowBackground] = useState(true);
+  const logoutRef = useRef();
+  const inputRef = useRef();
+  const profileRef = useRef();
+  const [ popSettingDiv, setPopSettingDiv ] = useState(false);
 
-
+  // console.log('Navbar expand', expand);
 
   useEffect(() => {
-    let path = location.pathname
-    if( (path === "/songtrack" || path === "/liked-songs" || path === "/artist-track") ) setShowBackground(!showBackground)
-  },[]);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   function handleExpand() {
-    // console.log('expand');
-    SetExpand(!expand);
+    if(expand) {
+      setExpand(false)
+    }
+    else{
+      setExpand(true);
+    }     
   }
+
+  const handleDocumentClick = (e) => {
+    if(profileRef?.current?.contains(e.target)){
+      return
+    }
+    else if (expand && !logoutRef?.current?.contains(e.target)){
+      setExpand(false);
+    }
+  };
+
+  useEffect(() => {
+      document.addEventListener("mousedown", handleDocumentClick);
+      return () => {
+          document.removeEventListener("mousedown", handleDocumentClick);
+        };
+  }, [expand]);
+
+  
+
+  function handlePopRendering(){
+    console.log("Pop rendering ")
+    setPopSettingDiv(!popSettingDiv);  
+  }
+
+  console.log("popSettingDiv popSettingDiv ... ", popSettingDiv)
 
   function handleLogin() {
     console.log("Cookie remove");
-    // document.cookies.remove("data=; path=/;");
     handleLoginState()
     navigate("/")
     document.cookie = "data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-
-
   }
 
   return (
     <>
-      <div className="fixed top-0 right-2 left-[18.6875rem] w-[87.4087rem] bg-black h-2 z-10"></div>
-      <div className={"w - [87.4087rem] h-16 fixed top-2 right-2  left-[18.6875rem] z-10 rounded-t-lg " + (showBackground ? "bg-[#121212]" : "bg-none")
-      }>
-        <header className="px-6 h-full py-4 flex items-center relative">
-          <div className="w-[4.5rem] flex justify-between">
-            <button className="h-8 w-8 bg-black rounded-[50%] justify-center items-center flex">
+      <div className="w-[calc(100% - 307px)] fixed top-0 right-2 left-[18.6875rem] bg-black hidden sm:block h-2 z-20"></div>
+
+      <div className={"max-sm:w-screen w-[calc(100% - 307px)] max-sm:z-20 h-14 sm:h-16 fixed sm:top-2 top-0 sm:right-2 z-20 left-0 sm:left-[18.6875rem] bg-[#121212] " + (popSettingDiv ? "hidden" : "")}>
+        <header className="px-6 w-full h-full py-4 flex items-center justify-between relative">
+
+          {/* For sm Screen: Logo */}
+          <div className="sm:hidden w-full flex items-center">
+              <BsSpotify className="text-white w-8 h-8" />
+              <span className="w-8 h-9 ml-6 text-xl font-figtree font-bold text-white flex justify-center items-center">Spotify</span>
+          </div>
+          {/* For sm: search icon */}
+          <div className="sm:hidden flex h-[2.125rem]">
+            <Link className="flex items-center"><BsSearch className="fill-[#A5A5A5] hover:fill-white w-[1.375rem] h-[1.375rem]" /></Link>
+            <div className="w-10 h-[2.125rem] flex justify-end items-start ml-2 hover:scale-110 "><IoReorderThree className="text-white w-9 h-9" onClick={handlePopRendering} /></div>
+          </div>
+
+
+          {/* Back & Forward Buttons */}
+          <div className="w-[4.5rem] sm:flex justify-between hidden">
+
+            <button className="h-8 w-8 bg-black rounded-[50%] justify-center items-center flex" onClick={() => 
+              {navigate(-1)
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                  });
+              }
+              } >
               <IoChevronBackOutline size="1.4rem" color="white" />
             </button>
-            <button className="h-8 w-8 bg-black rounded-[50%] justify-center items-center flex">
+
+            <button className="h-8 w-8 bg-black rounded-[50%] justify-center items-center flex" onClick={() => navigate(1)}>
               <IoChevronForwardOutline size="1.4rem" color="white" />
             </button>
+
           </div>
 
           {/* If user is not logged in */}
           {!login && (
             <>
-              {location.pathname === "/search" && (
-                <div className="h-12 w-[46.75rem] mr-[1.125rem]">
-                  <div className="w-[22.75rem] h-full bg-[#2A2A2A] rounded-3xl py-1.5 px-3 flex justify-center items-center gap-1.5">
-                    <span>
-                      <CiSearch className="text-white text-xl" />
-                    </span>
-                    <input
-                      className="placeholder:text-[#757575] w-full border-none font-figtree bg-inherit 
-                              text-sm"
-                      type="text"
-                      placeholder="What do you want to listen to?"
-                    ></input>
-                  </div>
+              { location.pathname === "/search"  && (
+                <div className="hidden sm:block h-12 w-[46.75rem] mr-[1.125rem] relative">
+
+                  <input ref={inputRef} className="w-[22.75rem] h-full bg-[#2A2A2A] rounded-3xl py-1.5 px-3 flex justify-center items-center 
+                  gap-1.5 placeholder:text-[#757575] font-figtree bg-inherit text-sm pl-8 text-white" placeholder="What do you want to listen to?" type="text">
+                  </input>
+
+                  <span>
+                      <CiSearch className="text-white text-xl absolute top-3.5 left-2" />
+                  </span>
+
                 </div>
               )}
-              {location.pathname === "/" && (
-                <div className="h-12 w-[46.75rem] mr-[1.125rem]"></div>
+
+              {( location.pathname === "/" || location.pathname === "/more-artist" ) && (
+                <div className="hidden sm:block h-12 w-[46.75rem] mr-[1.125rem]"></div>
               )}
 
-              <button
-                className=" font-figtree h-12 py-2 text-[#9B9B9B] text-base
-                            font-extrabold tracking-widest mr-2"
-              >
-                Premium
-              </button>
+              <Link to={"https://www.spotify.com/in-en/premium/?utm_source=app&utm_medium=desktop&utm_campaign=upgrade&ref=web_loggedout_premium_button"} 
+              target="_blank" className="max-lg:hidden font-figtree h-12 py-2 text-[#9B9B9B] text-base font-extrabold tracking-widest mr-2 hover:text-white hover:scale-[1.03]">Premium</Link>
 
-              <button
-                className=" font-figtree h-12 py-2 text-[#9B9B9B] text-base
-                            font-extrabold tracking-widest mr-2"
-              >
-                Support
-              </button>
+              <Link to={"https://support.spotify.com/in-en/"} 
+              target="_blank" className="max-lg:hidden font-figtree h-12 py-2 text-[#9B9B9B] text-base font-extrabold tracking-widest mr-2 hover:text-white hover:scale-[1.03]">Support</Link>
 
-              <button
-                className=" font-figtree h-12 py-2 text-[#9B9B9B] text-base
-                            font-extrabold tracking-widest mr-2"
-              >
-                Download
-              </button>
+              <Link to={"https://www.spotify.com/in-en/download/windows/"} 
+              target="_blank" className="max-lg:hidden font-figtree h-12 py-2 text-[#9B9B9B] text-base font-extrabold tracking-widest mr-2 hover:text-white hover:scale-[1.03]">Download</Link>
 
-              <div className="m-4 h-[1.5625rem] bg-white w-[1px]"></div>
+              <div className="hidden sm:block m-4 h-[1.5625rem] bg-white w-[1px]"></div>
 
-              <div className="w-[12.8125rem] h-12 flex">
+              <div className="hidden w-[12.8125rem] h-12 sm:flex">
                 <button className=" font-figtree w-[6rem] py-2 pl-2 pr-7 text-[#9B9B9B] font-bold hover:scale-[1.04] hover:text-white"
                   onClick={() => navigate("/signup")}>Sign up</button>
 
@@ -108,6 +151,7 @@ export default function Navbar() {
                     onClick={() => navigate("/login")}>Log in</span>
                 </button>
               </div>
+
             </>
           )}
 
@@ -118,68 +162,53 @@ export default function Navbar() {
                 <>
                   {/* Search Input */}
                   <div className="h-12 w-[872px] mr-[1.125rem] ml-2">
-                    <div className="w-[22.75rem] h-full bg-[#2A2A2A] rounded-3xl py-1.5 px-3 flex justify-center items-center gap-1.5">
-                      <span>
-                        <CiSearch className="text-white text-xl" />
-                      </span>
-                      <input
-                        className="placeholder:text-[#757575] w-full border-none font-figtree bg-inherit 
-                              text-sm"
-                        type="text"
-                        placeholder="What do you want to listen to?"
-                      ></input>
-                    </div>
+
+                    <input ref={inputRef} className="w-[22.75rem] h-full bg-[#2A2A2A] rounded-3xl py-1.5 px-3 flex justify-center items-center 
+                          gap-1.5 placeholder:text-[#757575] font-figtree bg-inherit text-sm pl-8 text-white" placeholder="What do you want to listen to?" type="text">
+                    </input>
+
+                    <span>
+                        <CiSearch className="text-white text-xl absolute top-[1.375rem] left-32" />
+                    </span>
+
                   </div>
-                  {/* <div className="w-[56.625rem]"></div> */}
-                  
                 </>
               )}
 
-              {(location.pathname === "/" ||
-                location.pathname === "/featured" ||
-                location.pathname === "/morealbums" ||
-                location.pathname === "/songtrack" ||
-                location.pathname === "/liked-songs" ||
-                location.pathname === "/artist-track" ||
-                location.pathname === "/artistsongs") && (
-                <div className="w-[872px] mr-[1.125rem] ml-2"></div>
-              )}
-
-              <button className=" w-[8.9375rem] hover:scale-[1.04] h-8 mr-2 text-black bg-white rounded-2xl font-figtree"
-                onClick={() => navigate("/premium")}>
+             <div className="flex justify-center items-center">
+               {/* Explore Premium */}
+               <button className=" w-[8.9375rem] hover:scale-[1.04] h-8 mr-2 text-black bg-white rounded-2xl font-figtree" onClick={()=> navigate("/stay-tuned")}>
                 <span className=" w-[8.9375rem] h-8 px-4 py-1 text-sm font-bold ">
                   Explore Premium
                 </span>
               </button>
-
+              
+              {/* Install App */}
               <a className="w-[7.375rem] h-8 text-white hover:scale-[1.04] hover:bg-[#392923] bg-[#080808] mr-2 rounded-2xl font-figtree
-                            px-4 py-1 flex justify-center items-center">
+                            px-4 py-1 flex justify-center items-center" onClick={()=> navigate("/stay-tuned")} >
                 <span className="relative right-1">
                   <BsArrowDownCircle />
                 </span>
                 <span className="text-sm font-bold">Install App</span>
               </a>
-
-              <button className=" hover:scale-[1.04] bg-[#080808] rounded-[50%] mr-2 flex justify-center items-center">
+              
+              {/* Notification Bell */}
+              <button className=" hover:scale-[1.04] bg-[#080808] rounded-[50%] mr-2 flex justify-center items-center" onClick={()=> navigate("/stay-tuned")}>
                 <span className="w-8 h-8 flex justify-center items-center hover:stroke-white">
                   <GoBellFill className="stroke-[#a7a7a7] h-4.5 w-4.5 hover:stroke-white stroke-2" />
-                  </span>
+                </span>
               </button>
 
-              <button
-                className="w-8 h-8 hover:scale-[1.04] bg-[#080808] rounded-[50%] flex justify-center items-center"
-                onClick={handleExpand}>
+              {/* Profile */}
+              <button ref={profileRef} className="w-8 h-8 hover:scale-[1.04] bg-[#080808] rounded-[50%] flex justify-center items-center" onClick={handleExpand}>
                 <GoPersonFill className="stroke-white stroke-2" />
               </button>
+             </div>
 
               {/* Logout/Login & Premium */}
-              <div
-                ref={logoutRef}
-                className={
-                  "w-[12.25rem] h-[7.625rem] bg-[#282828] font-figtree  absolute top-14 rounded-md right-[3.4375rem] " +
-                  (expand ? "block" : "hidden")
-                }
-              >
+              <div ref={logoutRef} className={"w-[12.25rem] h-[7.625rem] bg-[#282828] font-figtree  absolute top-14 rounded-md right-[3.4375rem] " +
+                  (expand ? "block" : "hidden")}>
+
                 <div className="w-[12.25rem] h-[7.625rem]">
                   <ul>
                     <li className="w-[11.75rem] h-[2.5rem]">
@@ -203,11 +232,50 @@ export default function Navbar() {
                     </li>
                   </ul>
                 </div>
+
               </div>
+
             </>
           )}
+
         </header>
       </div>
+
+      {/* for sm screen- Setting Icon Div popup */}
+      {!login && (
+        <div className={"bg-black w-full h-full px-10 mt-2 fixed top-0 left-0 z-30 " + (popSettingDiv ? "" : "hidden")}>
+          {/* Un-Render div */}
+          <button className="w-full p-3 h-10 flex justify-end" onClick={handlePopRendering}>
+            <RxCross1 className="stroke-2 stroke-white h-6 w-6 hover:scale-105 " />
+          </button>
+          {/* Login */}
+          <div className="h-12 py-2" onClick={() => navigate("/login")}>
+            <span className="font-figtree text-2xl text-white font-bold">Login</span>
+          </div>
+          {/* SignUp */}
+          <div className="h-12 py-2">
+            <span className="font-figtree text-2xl text-white font-bold" onClick={()=> navigate("/signup")}>Sign up</span>
+          </div>
+          {/* Break */}
+          <div className="w-4 h-[3.125rem] flex justify-center items-center">
+            <div className="w-[14px] h-[2px] bg-white"></div>
+          </div>
+          {/* Website Links */}
+          <div className="w-full font-figtree font-bold text-xl text-white flex flex-col gap-3 ">
+            <button className="h-[33px] py-1 flex items-center"><span className=""><Link to={"/premium"} href="">Premium</Link></span></button>
+            <button className="h-[33px] py-1 flex items-center"><span className=""><a href="https://support.spotify.com/in-en/">Support</a></span></button>
+            <button className="h-[33px] py-1 flex items-center"><span className="https://www.spotify.com/in-en/privacy"><a href="">Privacy</a></span></button>
+            <button className="h-[33px] py-1 flex items-center"><span className="https://www.spotify.com/in-en/legal/end-user-agreement/"><a href="">Terms</a></span></button>
+          </div>
+
+        </div>
+      )}   
+
     </>
   );
-}
+};
+
+
+export default Navbar;
+
+

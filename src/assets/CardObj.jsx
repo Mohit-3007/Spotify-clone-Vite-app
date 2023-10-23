@@ -1,15 +1,22 @@
 import Footer from "../components/Footer";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { BsHeartFill, BsSpotify, BsSearch } from "react-icons/bs";
+import { IoArrowBack } from "react-icons/io5";
 
 
 
 export default function CardObj() {
+  const navigate = useNavigate();
+  const [ showSearchBox,  setShowSearchBox ] = useState(false)
+
   const cardObj = [
     {
-      heading: "Podcasts",
+      heading: "Love",
       color: "#E13300",
     },
     {
-      heading: "Live events near you",
+      heading: "Soul",
       color: "#7358FF",
     },
     {
@@ -21,35 +28,35 @@ export default function CardObj() {
       color: "#E8115B",
     },
     {
-      heading: "Hindi",
+      heading: "Party",
       color: "#E91429",
     },
     {
-      heading: "Punjabi",
+      heading: "Evergreen",
       color: "#B02897",
     },
     {
-      heading: "Tamil",
+      heading: "Rock",
       color: "#A56752",
     },
     {
-      heading: "Telugu",
+      heading: "Trending",
       color: "#D84000",
     },
     {
-      heading: "Charts",
+      heading: "Sad",
       color: "#8D67AB",
     },
     {
-      heading: "Pop",
+      heading: "Artist",
       color: "#148A08",
     },
     {
-      heading: "Indie",
+      heading: "Charts",
       color: "#E91429",
     },
     {
-      heading: "Trending",
+      heading: "Telegu",
       color: "#B02897",
     },
     {
@@ -73,7 +80,7 @@ export default function CardObj() {
       color: "#C39687",
     },
     {
-      heading: "Decades",
+      heading: "Evergreen",
       color: "#BA5D07",
     },
     {
@@ -89,7 +96,7 @@ export default function CardObj() {
       color: "#AF2896",
     },
     {
-      heading: "Chill",
+      heading: "New releases",
       color: "#D84000",
     },
     {
@@ -97,7 +104,7 @@ export default function CardObj() {
       color: "#E8115B",
     },
     {
-      heading: "K-pop",
+      heading: "Sad",
       color: "#148A08",
     },
     {
@@ -157,7 +164,7 @@ export default function CardObj() {
       color: "#767676",
     },
     {
-      heading: "Classical",
+      heading: "Rock",
       color: "#7D4B32",
     },
     {
@@ -169,7 +176,7 @@ export default function CardObj() {
       color: "#503750",
     },
     {
-      heading: "Disney",
+      heading: "Trending",
       color: "#0D72EA",
     },
     {
@@ -181,7 +188,7 @@ export default function CardObj() {
       color: "#8D67AB",
     },
     {
-      heading: "Anime",
+      heading: "Made for you",
       color: "#E41D63",
     },
     {
@@ -189,7 +196,7 @@ export default function CardObj() {
       color: "#AF2896",
     },
     {
-      heading: "Punk",
+      heading: "Evergreen",
       color: "#1E3264",
     },
     {
@@ -205,7 +212,7 @@ export default function CardObj() {
       color: "#BA5D07",
     },
     {
-      heading: "Alternative",
+      heading: "Artist",
       color: "#E81328",
     },
     {
@@ -225,7 +232,7 @@ export default function CardObj() {
       color: "#D84000",
     },
     {
-      heading: "Songwriters",
+      heading: "Soul",
       color: "#8C1932",
     },
     {
@@ -241,7 +248,7 @@ export default function CardObj() {
       color: "#148A08",
     },
     {
-      heading: "Summer",
+      heading: "Love",
       color: "#27856A",
     },
     {
@@ -249,7 +256,7 @@ export default function CardObj() {
       color: "#EB1E32",
     },
     {
-      heading: "Asian Pacific Islander Heritage Month",
+      heading: "Party",
       color: "#F59B23",
     },
     {
@@ -265,48 +272,115 @@ export default function CardObj() {
       color: "#E1118C",
     },
     {
-      heading: "Tastemakers",
+      heading: "Rock",
       color: "#E8115B",
     },
   ];
 
+  function handleCardClick({cardName}){
+    console.log(cardName, " handleCardClick");
+
+    switch (cardName) {
+      case "Made for you":
+        navigate("/more-made4u")
+        break;
+      case "New releases":
+        navigate("/more-new-releases")
+        break;
+      case "Trending":
+        navigate("/more-trending-songs")
+        break;
+      case "Soul":
+        navigate("/more-soul-soother")
+        break;
+      case "Evergreen":
+        navigate("/more-evergreen-melodies")
+        break;
+      case "Party":
+        navigate("/more-happy")
+        break;
+      case "Love":
+        navigate("/more-romantic")
+        break;
+      case "Rock":
+        navigate("/more-excited")
+        break;
+      case "Sad":
+        navigate("/more-sad")
+        break;
+      case "Artist":
+        navigate("/more-artist")
+        break;
+      default:
+        navigate("/stay-tuned")
+    }
+  }
+
   return (
     <>
       {/* w-[87.4087rem] */}
-      <div className="w-[87.4087rem] absolute top-[4.5rem] left-[18.6875rem] bg-[#121212]">
+      <div className="max-sm:w-screen w-[calc(100%-307px)] h-fit absolute top-0 sm:top-[4.5rem] left-0 sm:left-[18.6875rem] bg-[#121212]">
+
         {/* Main Content */}
-        <div className="w-[87.4087rem]">
-          <div className="w-[87.4087rem] px-6">
-            {/*  */}
-            <div className="mt-4">
-              <div className="mb-4 h-[1.8125rem]">
-                <h2 className="text-white font-figtree font-bold text-2xl">
-                  Browse all
-                </h2>
-              </div>
+        <div className="w-[100%] px-4 sm:px-6">
+
+          {/* sm:screen Search Heading */}
+          <h1 className="sm:hidden w-[100%] h-8 mt-8 mb-4 font-figtree font-bold text-3xl text-white">Search</h1>
+
+          {/* sm:screen Search Bar */}
+          <button className="sm:hidden w-full h-11 px-4 bg-white font-semibold text-sm text-black rounded-sm
+            flex items-center cursor-pointer" onClick={()=> setShowSearchBox(true)}>
+            <BsSearch className="w-[22px] h-[22px] text-black mr-2 stroke-[0.5]" />What do you want to listen to?
+          </button>
+
+          {/* Browse all */}
+          <div className="mt-5 sm:mt-4">
+            <div className="mb-6 sm:mb-4 h-[1.8125rem]">
+              <h2 className="text-white font-figtree font-bold text-base sm:text-2xl">
+                Browse all
+              </h2>
             </div>
-            {/*  */}
-            <div className="w-full flex flex-wrap gap-5">
-              {cardObj.map((card, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{ backgroundColor: card.color }}
-                    className="w-[10.8125rem] h-[10.8125rem] rounded-xl py-4 px-3 text-center flex items-center justify-center">
-                      
+          </div>
+          
+          {/* Cards Map Function */}
+          <div className="w-[100%] flex justify-between flex-wrap gap-4 sm:gap-5">
+            {cardObj.map((card, index) => {
+              return (
+                <div
+                  key={index}
+                  style={{ backgroundColor: card.color }}
+                  className="w-[46.24%] sm:w-[10.8125rem] h-[92px] sm:h-[10.8125rem] rounded-xl sm:py-4 sm:px-3 text-center flex items-center justify-center"
+                  onClick={() => handleCardClick({ cardName: card.heading }) }
+                  >        
                     <span
                       className="text-white font-figtree
                             text-2xl font-semibold">
                       {card.heading}
                     </span>
-                  </div>
-                );
-              })}
-            </div>
+                </div>
+              );
 
+            })}
+          </div>
+
+        </div>
+
+        {/* sm:screen Search Page rendered on Click */}
+        <div className={"w-[100%] h-full fixed top-0 left-0 sm:hidden z-10 bg-[#121212] " + (showSearchBox ? "block" : "hidden")} >
+          {/* Search Input */}
+          <div className="w-full h-[4.5rem] p-3 flex items-center">
+            {/* back arrow */}
+            <button className="w-12 h-12 p-2 flex justify-center items-center cursor-pointer" onClick={()=> setShowSearchBox(false)}>
+              <IoArrowBack className="w-9 h-9 text-white" />
+            </button>
+            {/* search input box */}
+            <div className="w-[calc(100%-48px)] h-[38px] bg-white rounded-sm flex relative">
+               <BsSearch className="absolute top-[11px] left-3 w-5 h-5 text-[#4b4848] mr-2 stroke-[0.5]" />
+              <input type="text" placeholder="What do you want to listen to?" className="w-full h-full px-10 py-2 placeholder:text-[#717070]" />
+            </div>
           </div>
         </div>
-        {/* Footer */}
+
         <Footer />
       </div>
     </>

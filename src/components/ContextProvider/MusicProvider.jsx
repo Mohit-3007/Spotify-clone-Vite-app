@@ -1,8 +1,18 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 
 const MusicContext = createContext(null);
 
 export const MusicProvider = ({children}) => {
+    const [ isPlaying, setIsPlaying ] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+
+    function handleIsPlaying(val){
+        setIsPlaying(val)
+    }
+    function handleCurrentTime(){
+        setCurrentTime((prev) => prev + 1)
+    }
+
     const initialState = {
         musicPlayer: "inactive",
         musicStatus: "pause",
@@ -33,6 +43,12 @@ export const MusicProvider = ({children}) => {
         musicStatus: musicState.musicStatus,
         musicId: musicState.musicId,
         musicDispatch,
+        isPlaying: isPlaying,
+        handleIsPlaying,
+        // setIsPlaying:setIsPlaying,
+        currentTime: currentTime,
+        handleCurrentTime,
+        setCurrentTime:setCurrentTime,
     }
 
     return <MusicContext.Provider value={obj}>{children}</MusicContext.Provider>
