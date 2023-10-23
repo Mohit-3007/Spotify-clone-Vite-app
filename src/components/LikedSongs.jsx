@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
 import { useSongTrack } from "./ContextProvider/SongTrackProvider";
-import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { TbPlayerPlayFilled } from "react-icons/tb";
 import { BsHeartFill, BsFillPlayFill } from "react-icons/bs";
