@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
 import { BsHeartFill, BsSpotify, BsSearch } from "react-icons/bs";
 import { AiTwotonePushpin } from "react-icons/ai";
@@ -21,9 +21,6 @@ export default function Sidebar() {
   function handleHover(){
     setHover(!hover)
   }
-
-
-  // console.log("Liked Songs Array", likedSongIds)
 
   return (
     <>
