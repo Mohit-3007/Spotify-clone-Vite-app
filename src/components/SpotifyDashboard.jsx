@@ -132,7 +132,7 @@ export default function SpotifyDashboard() {
 
   return (
     <>
-      <div className={"max-sm:w-screen w-[calc(100%-307px)] h-fit absolute top-[72px] left-0 sm:left-[18.6875rem] bg-[#121212] " + (login ? "max-sm:top-0" : "max-sm:top-[72px]")}>
+      <div className={"max-sm:w-screen w-[calc(100%-307px)] h-fit absolute top-[72px] left-0 sm:left-[18.6875rem] bg-[#121212] " + (login ? "max-sm:top-0" : "max-sm:top-[56px]")}>
          
         {/* Music Containers */}
         {login && (
