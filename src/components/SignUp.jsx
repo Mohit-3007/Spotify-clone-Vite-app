@@ -1,16 +1,19 @@
 import "../styles/signup.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContextProvider } from "./ContextProvider/AppContextProvider";
 import { useLoginCredentialProvider } from "./ContextProvider/LoginCredentialProvider";
 import { Icon } from "@iconify/react";
 import { BiHide } from "react-icons/bi";
 
 
 export default function Signup() {
+  const { handleLoginState } = useContextProvider();
   const { email, handleEmail, password, handlePassword, name, handleName } = useLoginCredentialProvider()
   const [emailErrorMess, setEmailErrorMess] = useState("");
   const [passwordErrorMess, setPasswordErrorMess] = useState("");
   const [nameErrorMess, setNameErrorMess] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -37,7 +40,6 @@ export default function Signup() {
     handleName("")
     handlePassword("")
 
-    
     const signup = await fetch(
       "https://academics.newtonschool.co/api/v1/user/signup",
       {
@@ -57,10 +59,12 @@ export default function Signup() {
       const data = await signup.json();
       
       console.log(data);
-      // if(data.status === "success"){
-      //   document.cookie=`email=${email}`
-      //   document.cookie = `data = ${data.token}`;
-      // }
+      if(data.status === "success"){
+        document.cookie=`email=${email}`
+        document.cookie = `data = ${data.token}`;
+        handleLoginState()
+        navigate("/")
+      }
     console.log("DOCUMENT...COOKIE ",decodeURIComponent(document.cookie));
   }
 

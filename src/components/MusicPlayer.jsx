@@ -70,6 +70,12 @@ export default function MusicPlayer(){
   }
 
   useEffect(()=>{
+    pause()
+    handleIsPlaying(false);
+    // handlePause()
+  },[])
+
+  useEffect(()=>{
     if(musicId){
       console.log("Line- 46 MusicID   ", musicId);
       musicDispatch({ type: "pause" });
@@ -311,9 +317,7 @@ export default function MusicPlayer(){
     )
 }
 
-// , currentTime, handleCurrentTime, isPlaying
 function ProgessBar({ formattedDuration, durationInSeconds }){
-  // const [currentTime, setCurrentTime] = useState(0);
   const { currentTime, handleCurrentTime, isPlaying, setCurrentTime } = useMusic();
   const [ barWidth, setBarWidth ] = useState(0)
   const clickRef = useRef();

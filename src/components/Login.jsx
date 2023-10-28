@@ -9,10 +9,6 @@ import { useLoginCredentialProvider } from "./ContextProvider/LoginCredentialPro
 
 
 export default function Login() {
-  // {handleEmail, handlePassword, email, password}
-
-    // const [email, setEmail] = useState()
-    // const [password, setPassword] = useState()
     const navigate = useNavigate()
     const { login ,handleLoginState } = useContextProvider();
     const { email, handleEmail, password, handlePassword } = useLoginCredentialProvider()
