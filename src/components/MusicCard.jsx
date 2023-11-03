@@ -48,9 +48,9 @@ const handleIconClick = (event) => {
       >
         <div className="w-[152px] max-sm:h-[152px] sm:w-full">
 
-          <div className="w-full z-10 sm:mb-4 relative">
+          <div className="w-full sm:mb-4 relative">
             {/* Image w-[10.8125rem] */}
-            <div className={"w-full sm:mb-4 sm:shadow-xl -z-20 " + (hover ? "shadow-[#171717]" : "shadow-[#282828]")}>
+            <div className={"w-full sm:mb-4 sm:shadow-xl " + (hover ? "shadow-[#171717]" : "shadow-[#282828]")}>
               <img className="rounded-md" src={isImage ? musicObj?.image : musicObj?.thumbnail} />
             </div>
 

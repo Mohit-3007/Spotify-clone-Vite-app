@@ -32,7 +32,6 @@ export default function Home() {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log("resizing........")
       setScreenWidth(window.innerWidth);
     };
 

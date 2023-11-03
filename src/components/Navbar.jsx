@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import ReactDOM from 'react-dom';
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
 import { BsArrowDownCircle, BsSpotify, BsSearch } from "react-icons/bs";
 import { IoChevronBackOutline, IoChevronForwardOutline, IoReorderThree } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { FiExternalLink } from "react-icons/fi";
 import { GoBellFill, GoPersonFill } from "react-icons/go";
-import { useSongTrack } from "./ContextProvider/SongTrackProvider";
 import { RxCross1 } from "react-icons/rx";
 
  const Navbar = () => {
@@ -20,8 +18,21 @@ import { RxCross1 } from "react-icons/rx";
   const inputRef = useRef();
   const profileRef = useRef();
   const [ popSettingDiv, setPopSettingDiv ] = useState(false);
+  const [inputVal, setInputVal] = useState(" ");
 
   // console.log('Navbar expand', expand);
+
+  const handleEnterKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      console.log('Enter key pressed! Input value: ', inputVal.length);
+      makeFetchCall()
+      setInputVal('');
+    }
+  }
+
+  function makeFetchCall(){
+      
+  }
 
   useEffect(() => {
     if (inputRef.current) {
@@ -61,7 +72,7 @@ import { RxCross1 } from "react-icons/rx";
     setPopSettingDiv(!popSettingDiv);  
   }
 
-  console.log("popSettingDiv popSettingDiv ... ", popSettingDiv)
+  // console.log("popSettingDiv popSettingDiv ... ", popSettingDiv)
 
   function handleLogin() {
     console.log("Cookie remove");
@@ -163,13 +174,20 @@ import { RxCross1 } from "react-icons/rx";
                   {/* Search Input */}
                   <div className="h-12 w-[872px] mr-[1.125rem] ml-2">
 
-                    <input ref={inputRef} className="w-[22.75rem] h-full bg-[#2A2A2A] rounded-3xl py-1.5 px-3 flex justify-center items-center 
-                          gap-1.5 placeholder:text-[#757575] font-figtree bg-inherit text-sm pl-8 text-white" placeholder="What do you want to listen to?" type="text">
+                    <input ref={inputRef} value={inputVal} onChange={(e)=>setInputVal(e.target.value)} onKeyDown={handleEnterKeyPress}
+                    className="w-[22.75rem] h-full rounded-3xl py-1.5 px-3 bg-[#2e2d2d] flex justify-center items-center gap-1.5 placeholder:text-[#757575] font-figtree bg-inherit text-sm pl-8 text-white" 
+                    placeholder="What do you want to listen to?" type="text">
                     </input>
 
                     <span>
-                        <CiSearch className="text-white text-xl absolute top-[1.375rem] left-32" />
+                        <CiSearch className="text-white text-xl absolute top-[1.375rem] left-[108px]" />
                     </span>
+
+                    {inputVal.length > 0 && (
+                      <span onClick={() => setInputVal("")}>
+                        <RxCross1 className="text-white text-xl absolute top-[1.375rem] left-[425px]" />
+                      </span>
+                    )}
 
                   </div>
                 </>

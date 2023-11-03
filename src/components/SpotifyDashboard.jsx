@@ -46,7 +46,7 @@ export default function SpotifyDashboard() {
 
       if(eMusic.type === "made4u"){
         let resp = await fetch(
-          'https://academics.newtonschool.co/api/v1/music/album?limit=6&page=2&sort={"release": "-1"}',
+          'https://academics.newtonschool.co/api/v1/music/album?limit=5&page=2&sort={"release": "-1"}',
           {
             headers: headers,
           }
@@ -58,7 +58,7 @@ export default function SpotifyDashboard() {
 
       if(eMusic.type === "featured"){
         let resp = await fetch(
-          `https://academics.newtonschool.co/api/v1/music/song?limit=6&filter={"featured": "${eMusic.filterKey}"}`,
+          `https://academics.newtonschool.co/api/v1/music/song?limit=5&filter={"featured": "${eMusic.filterKey}"}`,
           {
             headers: headers,
           }
@@ -71,7 +71,7 @@ export default function SpotifyDashboard() {
       if(eMusic.type === "mood"){
         // console.log(eMusic.type," && ",eMusic.filterKey);
         let resp = await fetch(
-          `https://academics.newtonschool.co/api/v1/music/song?limit=6&filter={"mood": "${eMusic.filterKey}"}`,
+          `https://academics.newtonschool.co/api/v1/music/song?limit=5&filter={"mood": "${eMusic.filterKey}"}`,
           {
             headers: headers,
           }
@@ -83,7 +83,7 @@ export default function SpotifyDashboard() {
 
       if(eMusic.type === "release"){
         let resp = await fetch(
-          `https://academics.newtonschool.co/api/v1/music/album?limit=6&sort={"release": "${eMusic.filterKey}"}`,
+          `https://academics.newtonschool.co/api/v1/music/album?limit=5&sort={"release": "${eMusic.filterKey}"}`,
           {
             headers: headers,
           }
@@ -103,7 +103,7 @@ export default function SpotifyDashboard() {
   useEffect(() => {
     async function fetchData() {
       let data3 = await fetch(
-        "https://academics.newtonschool.co/api/v1/music/artist?limit=6",
+        "https://academics.newtonschool.co/api/v1/music/artist?limit=5",
         {
           headers: headers,
         }

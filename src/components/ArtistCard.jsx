@@ -54,7 +54,7 @@ export default function ArtistCard({ artistObj }){
             <div className="w-[152px] max-sm:h-[152px] sm:w-full ">
 
                 {/* Image */}  {/* h-[calc-(100%-62px)] */}
-                <div className="w-full z-10 sm:mb-4 relative">
+                <div className="w-full sm:mb-4 relative">
                     <div className="w-full h-full  ">
                         <img className={"rounded-[50%] max-sm:shadow-md shadow-xl " + (hover ? "shadow-[#171717]" : "shadow-[#282828]")}  src={artistObj.image} />
                     </div>         

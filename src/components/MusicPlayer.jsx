@@ -26,19 +26,33 @@ export default function MusicPlayer(){
   const [ pictureIn, setPictureIn ] = useState(false); 
   const [ showPip, setShowPip ] = useState(false);
   const type= "false";
+  // const [duration, setDuration] = useState(0);
  
-  console.log("showPip showPip showPip  ", showPip);
 
-  console.log("Line -23 URL & musicObj ", audioUrl, " ", musicObj)
+  console.log("Line -31 audioURL ", audioUrl)
+  console.log("Line 32 && MusicObj ", musicObj)
 
+
+  // useEffect(() => {
+  //   const audioElement = new Audio(audioUrl);
+  //   audioElement.addEventListener('loadedmetadata', () => {
+  //     setDuration(audioElement.duration);
+  //     console.log('Audio duration:', duration);
+  //   });
+  // },[audioUrl])
   
   const [play, { pause, stop, duration, seek, volume: currentVolume }] = useSound(audioUrl, {
     volume,
     onload: () => {
-      console.log("Duration Inside useSound LOADED:", duration);      
+      console.log("Song Loaded ", duration);     
+    },
+    onplay: () => {
+      console.log("Song Playing  "); 
+      handleIsPlaying(true)    
+      
     },
     onend: () => {
-      console.log("Audio finished playing.");
+      console.log("Song Ended");
       function changeState(){
         musicDispatch({ type: "pause" })
         handleIsPlaying(false)
@@ -47,15 +61,12 @@ export default function MusicPlayer(){
       changeState()
     },
     onpause: () => {
-      console.log("Audio paused.");
+      console.log("Song paused");
     },
   })
   
-  console.log("SEEK SEEK",seek)
-
   const isFirstTimeRender = useRef(true);
   const [ isCapable, setCapable ] = useState(false);
-  console.log("isFirstTimeRender.current Status   ",isFirstTimeRender.current)
  
   function handlePause(){
     console.log("Pause");
@@ -72,7 +83,6 @@ export default function MusicPlayer(){
   useEffect(()=>{
     pause()
     handleIsPlaying(false);
-    // handlePause()
   },[])
 
   useEffect(()=>{
@@ -92,22 +102,22 @@ export default function MusicPlayer(){
         setAudioUrl(rs.data.audio_url);
         musicDispatch({ type: "play" });  
         // setIsPlaying(true);
-        handleIsPlaying(true)
+        // handleIsPlaying(true)
       })
       return () => stop();
     }
   },[musicId])
 
   useEffect(() => {
-   
+    console.log("DURATION", duration)
     if (duration > 0) {
-
       if (isFirstTimeRender.current) {
         console.log("First Time Render" );
         isFirstTimeRender.current = false;
         return;
       }
-      play();
+      play(); 
+      // handleIsPlaying(true)
       console.log("2nd time render")
       if (musicStatus === "play") setCapable(true);
     }
@@ -117,7 +127,7 @@ export default function MusicPlayer(){
   useEffect(() => {
     console.log("Line- 82 Capability ", isCapable)
     if (isCapable) {
-      console.log(musicStatus,"musicStatus")
+      // console.log(musicStatus,"musicStatus")
       if (musicStatus === "play"){
         play();
       } 
@@ -360,7 +370,6 @@ function ProgessBar({ formattedDuration, durationInSeconds }){
 
     const divprogress = offset / width * 100;
     // audioElem.current.currentTime = divprogress / 100 * currentSong.length;
-
   }
   
 

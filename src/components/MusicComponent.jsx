@@ -36,7 +36,6 @@ export default function MusicComponent() {
   const handleChange = (e) => {
     setVolume(Number(e.target.value));
   };
-  console.log("Volume  ",volume)
 
   useEffect(()=>{
     if(volume>0){
@@ -46,7 +45,7 @@ export default function MusicComponent() {
 
   return (
     <>     
-      <div className="w-[calc(100% - 307px)] h-2 hidden sm:block fixed bottom-[5rem] Z-20 right-2 left-[18.6875rem] bg-black"></div>
+      <div className="w-[calc(100% - 307px)] h-2 hidden sm:block fixed bottom-[5rem] Z-30 right-2 left-[18.6875rem] bg-black"></div>
       
       {!login && (
         <div className="w-[calc(100% - 16px)] h-[4.5rem] hidden sm:block fixed bottom-2 right-2 left-2 z-10">
