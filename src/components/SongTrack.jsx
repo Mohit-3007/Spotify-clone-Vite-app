@@ -2,13 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
 import { useMusic } from "./ContextProvider/MusicProvider";
-import Navbar from "./Navbar";
 import { TbPlayerPlayFilled } from "react-icons/tb";
 import { BsHeartFill, BsFillPlayFill } from "react-icons/bs";
 import { BiTime, BiDotsHorizontalRounded } from "react-icons/bi";
 import headers from "../assets/config";
 import Footer from "./Footer";
-import { useSongTrack } from "./ContextProvider/SongTrackProvider";
 
 
 const monthNames = [
