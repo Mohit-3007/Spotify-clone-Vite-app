@@ -31,15 +31,6 @@ export default function MusicPlayer(){
 
   console.log("Line -31 audioURL ", audioUrl)
   console.log("Line 32 && MusicObj ", musicObj)
-
-
-  // useEffect(() => {
-  //   const audioElement = new Audio(audioUrl);
-  //   audioElement.addEventListener('loadedmetadata', () => {
-  //     setDuration(audioElement.duration);
-  //     console.log('Audio duration:', duration);
-  //   });
-  // },[audioUrl])
   
   const [play, { pause, stop, duration, seek, volume: currentVolume }] = useSound(audioUrl, {
     volume,
@@ -344,10 +335,6 @@ function ProgessBar({ formattedDuration, durationInSeconds }){
 
       else if(!isPlaying && currentTime !== 0 ){
         clearInterval(intervalId)
-        // console.log(currentTime, formattedDuration);
-        // if(currentTime === durationInSeconds){
-        //   setCurrentTime(0)
-        // } 
       }
       return () => clearInterval(intervalId);
   },[ isPlaying, currentTime, formattedDuration ])

@@ -11,11 +11,7 @@ import { MdVerified } from "react-icons/md";
 import headers from "../assets/config";
 
 
-
-
-
 export default function ArtistTrack() {
-  
   const location = useLocation();
   const [ artistData, setArtistData ] = useState();
   const [artistId, setArtistId] = useState();
@@ -265,7 +261,6 @@ function FavouriteIcon({musicObj}){
 }
 
 
-
 function SongContainer({eachSong, index, handleArtistId}){
     const [hover, setHover] = useState(false);
     const { musicDispatch } = useMusic();
@@ -358,7 +353,6 @@ function SongContainer({eachSong, index, handleArtistId}){
         </div>
     )
 }
-
 
 function CurrentSongArtists({ artistId, index, hover, handleArtistId }) {
     let [artistName, setArtistname] = useState()
