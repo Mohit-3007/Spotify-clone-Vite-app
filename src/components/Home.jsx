@@ -23,7 +23,6 @@ import BottomBar from "./BottomBar";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
 
 
-
 export default function Home() {
   const { login } = useContextProvider();
   const location = useLocation();
@@ -34,26 +33,30 @@ export default function Home() {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
-
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
   useEffect(() => { 
     setPath(location.pathname)
   }, [location])
 
   return (
     <>
+    {/* <div className="flex flex-col w-full h-full gap-2">
+      <div className="flex flex-row gap-2 w-full h-[calc(100%-80px)]">
+        <Sidebar />    
+      </div>
+      <div className="w-full h-[72px]">
+        <MusicComponent />
+        {login && screenWidth < 640 ? <BottomBar /> : null}
+      </div>
+    </div> */}
       <Sidebar />
       {/* For small screens*/}
-      {login && screenWidth > 640 ? <Navbar /> : null}
-      
+      {login && screenWidth > 640 ? <Navbar /> : null}  
       {!login && <Navbar /> }
-
-     
       { path === "/" ? <SpotifyDashboard /> :
         path === "/more-made4u" ? <MoreMade4U /> :
         path === "/more-new-releases" ? <MoreNewReleases /> :
@@ -69,14 +72,34 @@ export default function Home() {
         path === "/artist-track" ? <ArtistTrack /> :
         <SongTrack /> 
       }
-     
       <MusicComponent />
-
-      {/* For small screens*/}
       {login && screenWidth < 640 ? <BottomBar /> : null}
-
     </>
   );
 }
 
+// {
+//   <div className="flex flex-col w-[calc(100%-291px)] h-full">
+//           {/* For small screens*/}
+//           {login && screenWidth > 640 ? <Navbar /> : null}
+
+//           {!login && <Navbar /> }
+
+//           { path === "/" ? <SpotifyDashboard /> :
+//             path === "/more-made4u" ? <MoreMade4U /> :
+//             path === "/more-new-releases" ? <MoreNewReleases /> :
+//             path === "/more-trending-songs" ? <MoreTrendingSongs /> :
+//             path === "/more-soul-soother" ? <MoreSoulSoother /> :
+//             path === "/more-evergreen-melodies" ? <MoreEvergreenMelodies /> :
+//             path === "/more-happy" ? <MoreHappy /> :
+//             path === "/more-romantic" ? <MoreRomantic /> :
+//             path === "/more-sad" ? <MoreSad /> :
+//             path === "/more-excited" ? <MoreExcited /> :
+//             path === "/more-artist" ? <MoreArtist /> :
+//             path === "/liked-songs" ? <LikedSongs /> :
+//             path === "/artist-track" ? <ArtistTrack /> :
+//             <SongTrack /> 
+//           }
+//         </div>
+// }
 

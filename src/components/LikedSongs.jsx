@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
-import { useSongTrack } from "./ContextProvider/SongTrackProvider";
 import Footer from "./Footer";
 import { TbPlayerPlayFilled } from "react-icons/tb";
 import { BsHeartFill, BsFillPlayFill } from "react-icons/bs";
@@ -19,7 +18,6 @@ export default function LikedSongs() {
     setPath(location.pathname);
   })
 
-  const { songData } = useSongTrack();
   const { likedSongIds } = useContextProvider()
  
   console.log("Line - 20 ", likedSongIds);

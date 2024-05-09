@@ -8,23 +8,7 @@ import { BiTime, BiDotsHorizontalRounded } from "react-icons/bi";
 import headers from "../assets/config";
 import Footer from "./Footer";
 
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-
+const monthNames = ["January","February","March","April","May", "June","July","August","September","October","November","December",];
 export default function SongTrack() {
   const [musicObj, setMusicObj] = useState();
   const [albumObj, setAlbumObj] = useState();
@@ -50,7 +34,6 @@ export default function SongTrack() {
     setQueryType(val)
   }
 
-
   // Splitting Location State String
   useEffect(()=>{
     const splitState= (location?.state?.data)?.split("&");
@@ -58,7 +41,6 @@ export default function SongTrack() {
       const id = splitState[0]
       setSearchId(id);
       const type = splitState[1]
-
       if(type == "false"){
         setQueryType("song")
       }
@@ -69,10 +51,8 @@ export default function SongTrack() {
   },[path])
 
   // console.log(" Line  97  ",searchId, queryType)
-  
   useEffect(()=>{
     if(queryType) fetchData();
-
     async function fetchData() {
       try{
         let resp = await fetch(
@@ -92,7 +72,6 @@ export default function SongTrack() {
         console.error("Error while fetching artist data:", error);
       }
     }
-    
   },[searchId, queryType])
 
   useEffect(() => {
@@ -120,7 +99,6 @@ export default function SongTrack() {
     getYear();
   }, [musicObj]);
 
-
   useEffect(() => {
     async function checkAlbum() {
       if (musicObj?.album) {
@@ -138,7 +116,6 @@ export default function SongTrack() {
     checkAlbum();
   }, [musicObj]);
   // console.log("albumObject", albumObj);
-
   useEffect(()=>{
     if(musicObj?.type === "song"){
       setAudioId(musicObj?._id)
@@ -151,220 +128,165 @@ export default function SongTrack() {
   const handleIconClick = () => {
     musicDispatch({ type: "setMusicId", payload: audioId })
   }
-
   console.log("AUDIO URL AUDIO URL AUDIO URL   ", audioId)
-
   return ( 
     <>
-      
-      <div className="max-sm:w-screen w-[calc(100%-307px)] h-fit absolute top-0 sm:top-[72px] left-0 sm:left-[18.6875rem] pb-8">
-        {/* Main Container */}
-        <div>
-          <section className="w-[100%] font-figtree relative">
-            {/* Music Thumbnail & Title */}
-            <div className="w-[100%] px-6 pb-6 h-[21.25rem] relative">
-              {/* BG- Color */}
-              <div className="w-[100%] h-[21.25rem] bg-gradient-to-b from-[#2D99B8] to-[#154A59] absolute left-0 top-0"></div>
-              {/* Album pic */}
-              <button className="w-[14.5rem] h-[14.5rem] mr-6 z-10 absolute left-6 bottom-6 shadow-xl hover:scale-[1.03]">
-                <div className="w-[14.5rem] h-[14.5rem]">
-                  <img src={queryType === "album" ? musicObj?.image : musicObj?.thumbnail} alt="album pic" />
-                </div>
-              </button>
-              {/* Song details */}
-              <div className="w-[87.05%] h-[19.75rem] absolute left-[17.5rem] bottom-6 flex flex-col justify-end text-white font-figtree">
-              
-                 {/* Single Song OR Album */}
-                <span className="w-[100%] h-[1.375rem] text-sm absolute bottom-[148px]">
-                  {musicObj?.type === "song" ? 
-                    (musicObj?.album === undefined ? "Single" : "Album" )
-                    :
-                    (musicObj?.songs?.length == 1 ? "Single" : "Album")
-                  }
-                </span>
-                
-                {/* Title */}
-                <span className="w-[100%] h-[7.25rem] mt-2 absolute bottom-[32px]">
-                  <h1 className="mt-2 mb-3 w-[100%] h-[7.25rem] font-extrabold text-8xl whitespace-nowrap overflow-hidden text-ellipsis">{musicObj?.title}</h1>
-                </span>
-
-                {/* Artist map & Year & SongArray Length */}
-                <div className="w-[100%] h-[1.625rem] mt-2 flex absolute bottom-0 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-
-                   {/* If Data from song API*/}
-                  {musicObj?.artist?.map((each, index) => {
-                    return (
-                      <Link key={index} className="h-6 font-bold flex items-center cursor-pointer hover:underline"
-                      to={"/artist-track"}
-                      state={{id: each._id}}
-                      >
-                        {index != 0 && (
-                          <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">
-                            .
-                          </span>
-                        )}
-                        <span>{each.name}</span>
-                      </Link>
-                    );
-                  })}
-
-                  {/* If Data from album API*/}
-                  {musicObj?.artists?.map((each, index) => {
-                    return (
-                      <Link key={index} className="h-6 font-bold flex items-center cursor-pointer hover:underline"
-                      to={"/artist-track"}
-                      state={{id: each._id}}
-                      >
-                        {index != 0 && (
-                          <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">
-                            .
-                          </span>
-                        )}
-                        <span>{each.name}</span>
-                      </Link>
-                    );
-                  })}
-
-                  <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">
-                    .
-                  </span>
-                  <span className="h-6 flex items-center text-sm">{year}</span>
-                  <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">
-                    .
-                  </span>
-                  <span className="h-6 flex items-center text-sm mr-1">
-                    {musicObj?.album ? albumObj?.songs?.length+" Songs" : 1+" Song"} 
-                  </span>
-                  
-
-                </div>
-
+    <div className="max-sm:w-screen w-[calc(100%-307px)] h-fit absolute top-0 sm:top-[72px] left-0 sm:left-[18.6875rem] pb-8">
+      {/* Main Container */}
+      <div>
+        <section className="w-[100%] font-figtree relative">
+          {/* Music Thumbnail & Title */}
+          <div className="w-[100%] px-6 pb-6 h-[21.25rem] relative">
+            {/* BG- Color */}
+            <div className="w-[100%] h-[21.25rem] bg-gradient-to-b from-[#2D99B8] to-[#154A59] absolute left-0 top-0"></div>
+            {/* Album pic */}
+            <button className="w-[14.5rem] h-[14.5rem] mr-6 z-10 absolute left-6 bottom-6 shadow-xl hover:scale-[1.03]">
+              <div className="w-[14.5rem] h-[14.5rem]">
+                <img src={queryType === "album" ? musicObj?.image : musicObj?.thumbnail} alt="album pic" />
+              </div>
+            </button>
+            {/* Song details */}
+            <div className="w-[87.05%] h-[19.75rem] absolute left-[17.5rem] bottom-6 flex flex-col justify-end text-white font-figtree">   
+              {/* Single Song OR Album */}
+              <span className="w-[100%] h-[1.375rem] text-sm absolute bottom-[148px]">
+                {musicObj?.type === "song" ? 
+                  (musicObj?.album === undefined ? "Single" : "Album" )
+                  :
+                  (musicObj?.songs?.length == 1 ? "Single" : "Album")
+                }
+              </span>             
+              {/* Title */}
+              <span className="w-[100%] h-[7.25rem] mt-2 absolute bottom-[32px]">
+                <h1 className="mt-2 mb-3 w-[100%] h-[7.25rem] font-extrabold text-8xl whitespace-nowrap overflow-hidden text-ellipsis">{musicObj?.title}</h1>
+              </span>
+              {/* Artist map & Year & SongArray Length */}
+              <div className="w-[100%] h-[1.625rem] mt-2 flex absolute bottom-0 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                {/* If Data from song API*/}
+                {musicObj?.artist?.map((each, index) => {
+                  return (
+                    <Link key={index} className="h-6 font-bold flex items-center cursor-pointer hover:underline"
+                    to={"/artist-track"}
+                    state={{id: each._id}}
+                    >
+                      {index != 0 && (
+                        <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">
+                          .
+                        </span>
+                      )}
+                      <span>{each.name}</span>
+                    </Link>
+                  );
+                })}
+                {/* If Data from album API*/}
+                {musicObj?.artists?.map((each, index) => {
+                  return (
+                    <Link key={index} className="h-6 font-bold flex items-center cursor-pointer hover:underline"
+                    to={"/artist-track"}
+                    state={{id: each._id}}
+                    >
+                      {index != 0 && (
+                        <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">
+                          .
+                        </span>
+                      )}
+                      <span>{each.name}</span>
+                    </Link>
+                  );
+                })}
+                <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">.</span>
+                <span className="h-6 flex items-center text-sm">{year}</span>
+                <span className="h-[1.625rem] w-[0.9375rem] flex justify-center items-start text-base font-extrabold">.</span>
+                <span className="h-6 flex items-center text-sm mr-1">{musicObj?.album ? albumObj?.songs?.length+" Songs" : 1+" Song"} </span>
               </div>
             </div>
-
-            {/* ///////////////////////////////////////////////////////////// */}
-            <div className="w-[100%] pb-6 bg-gradient-to-b from-[rgb(18,61,74)] to-[rgb(18,20,20)] to-20%">
-              {/* Music Player & Likes */}
-              <div className="w-[100%] h-[6.5rem] top-[21.25rem] z-20">
-                <div className="w-[100%] h-[6.5rem]">
-                  <div className="w-[100%] h-[6.5rem] p-6">
-                    <div className="w-[100%] h-14 flex">
-
- 
-                      {/* Player Icon */}
-                      <div className="mr-8 w-14 h-14 " onClick={handleIconClick}>
-                        <button className="w-14 h-14 flex justify-center items-center">
-                          <span className="w-14 h-14 rounded-[50%] bg-[#1ED760] flex justify-center items-center">
-                            <TbPlayerPlayFilled className="h-[1.375rem] w-[1.375rem]" />
-                          </span>
-                        </button>
-                      </div>
-                      
-                      {/* Like Heart Icon */}
-                      <FavouriteIcon Object={musicObj}/>
-                      
-                    </div>
+          </div>
+          {/* ///////////////////////////////////////////////////////////// */}
+          <div className="w-[100%] pb-6 bg-gradient-to-b from-[rgb(18,61,74)] to-[rgb(18,20,20)] to-20%">
+            {/* Music Player & Likes */}
+            <div className="w-[100%] h-[6.5rem] top-[21.25rem] z-20">
+              <div className="w-[100%] h-[6.5rem]">
+                <div className="w-[100%] h-[6.5rem] p-6">
+                  <div className="w-[100%] h-14 flex">
+                    {/* Player Icon */}
+                    <div className="mr-8 w-14 h-14 " onClick={handleIconClick}>
+                      <button className="w-14 h-14 flex justify-center items-center">
+                        <span className="w-14 h-14 rounded-[50%] bg-[#1ED760] flex justify-center items-center">
+                          <TbPlayerPlayFilled className="h-[1.375rem] w-[1.375rem]" />
+                        </span>
+                      </button>
+                    </div>                 
+                    {/* Like Heart Icon */}
+                    <FavouriteIcon Object={musicObj}/>                
                   </div>
                 </div>
               </div>
-
-              {/* Table Heading & MusicList Items-(Map) & Copy Right & More By artist */}
-              <div className="min-w-[400px] sm:min-w-[800px] w-[100%] px-6 max-h-fit top-[28.75rem] flex flex-col">
-                {/* Table Heading  */}
-                <div className="w-[100%] max-h-fit border-[0.0781rem] border-transparent">
-                  <div className="w-[100%] h-[2.25rem] mb-4 ">
-                    <div className="w-[96.5%] h-[2.1719rem] border-b-[0.0781rem] border-b-[#1e3b43] px-4 flex relative text-[#B3B3B3]">
-
-                      <div className="w-3 h-[2.1719rem] flex items-center mr-4">
-                        #
-                      </div>
-
-                      <div className="w-7 h-[2.1719rem] flex justify-center items-center">
-                        <span>Title</span>
-                      </div>
-
-                      <div className="w-12 h-[2.1719rem] flex items-center absolute right-3">
-                        <BiTime className="w-4.5 h-4.5" />
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-                {/* Music List- Map Function{" "}   */}
-                <div className="w-[100%]"> 
-
-                  {/* if Single Song ? song API : album API*/}
-                  {musicObj?.type === "song" ? 
-                    (musicObj?.album === undefined && <SongContainer musicObj={musicObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} /> )
-                    :
-                    (musicObj?.songs?.length <= 1 && <SongContainer musicObj={musicObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />)
-                  }
-
-                  {/* If Album from song API */}
-                    {musicObj?.album &&
-                      albumObj?.songs.map((each, index) => {
-                        return (
-                          <SongsContainer key={each._id} each={each} index={index} albumObj={albumObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />
-                        )
-                      })
-                  }
-
-                  {/* If Album from Album API */}
-                  {musicObj?.songs?.length > 1 && 
-                    musicObj?.songs.map((each, index) => {
-                      return (
-                        <SongsContainer key={each._id} each={each} index={index} albumObj={musicObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />
-                      )
-                    })
-                  } 
-
-                </div>
-
-                {/* Copy Right */}
-                <div className="mt-8 w-[84.5rem] h-[3.5rem]  text-white">
-                  <div className="w-[24.25rem] h-[3.5rem] text-[#9D9D9D]">
-                    <p className="text-sm font-semibold">
-                      {month} {day}, {year}
-                    </p>
-                    <div className="h-9 text-[0.6875rem]">
-                      <p>
-                        @ 2023 Meri marzi Pictures LLP under exclusive licenses to
-                        Warner Music India
-                      </p>
-                      <p>
-                        @ 2023 Meri marzi Pictures LLP under exclusive licenses to
-                        Warner Music India
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* More by Artist */}
-                <div className="w-[100%] h-[20.625rem] mt-12 mb-4">
-                  <section className="w-[100%] h-[20.625rem]">
-                    {/* More by Artist */}
-                    <div className="w-[100%] h-[2.875rem]">
-                      <div className="mb-4 w-[100%] h-[1.875rem] ">
-                        {musicObj?.type === "song" ? <ArtistNameHeading artistObj={musicObj?.artist} />
-                         : <ArtistNameHeading artistObj={musicObj?.artists} />
-                        }
-                      </div>
-                    </div>
-                    {/* More Song Card of Artist */}
-                    <div className="w-[100%]  flex flex-wrap gap-6">
-                      <MoreArtistSong musicObj={musicObj} headers={headers} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />
-                    </div>
-                  </section>
-                </div>
-                
-              </div>  
-
             </div>
-          </section> 
-        </div>
-        <Footer />
+            {/* Table Heading & MusicList Items-(Map) & Copy Right & More By artist */}
+            <div className="min-w-[400px] sm:min-w-[800px] w-[100%] px-6 max-h-fit top-[28.75rem] flex flex-col">
+              {/* Table Heading  */}
+              <div className="w-[100%] max-h-fit border-[0.0781rem] border-transparent">
+                <div className="w-[100%] h-[2.25rem] mb-4 ">
+                  <div className="w-[96.5%] h-[2.1719rem] border-b-[0.0781rem] border-b-[#1e3b43] px-4 flex relative text-[#B3B3B3]">
+                    <div className="w-3 h-[2.1719rem] flex items-center mr-4">#</div>
+                    <div className="w-7 h-[2.1719rem] flex justify-center items-center"><span>Title</span></div>
+                    <div className="w-12 h-[2.1719rem] flex items-center absolute right-3"><BiTime className="w-4.5 h-4.5" /> </div>
+                  </div>
+                </div>
+              </div>
+              {/* Music List- Map Function{" "}   */}
+              <div className="w-[100%]"> 
+                {/* if Single Song ? song API : album API*/}
+                {musicObj?.type === "song" ? 
+                  (musicObj?.album === undefined && <SongContainer musicObj={musicObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} /> ):
+                  (musicObj?.songs?.length <= 1 && <SongContainer musicObj={musicObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />)}
+                {/* If Album from song API */}
+                {musicObj?.album &&
+                  albumObj?.songs.map((each, index) => {
+                    return (
+                      <SongsContainer key={each._id} each={each} index={index} albumObj={albumObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />
+                    )
+                  })
+                }
+                {/* If Album from Album API */}
+                {musicObj?.songs?.length > 1 && 
+                  musicObj?.songs.map((each, index) => {
+                    return (
+                      <SongsContainer key={each._id} each={each} index={index} albumObj={musicObj} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />
+                    )
+                  })
+                } 
+              </div>
+              {/* Copy Right */}
+              <div className="mt-8 w-[84.5rem] h-[3.5rem]  text-white">
+                <div className="w-[24.25rem] h-[3.5rem] text-[#9D9D9D]">
+                  <p className="text-sm font-semibold">{month} {day}, {year}</p>
+                  <div className="h-9 text-[0.6875rem]">
+                    <p>@ 2023 Meri marzi Pictures LLP under exclusive licenses to Warner Music India</p>
+                    <p>@ 2023 Meri marzi Pictures LLP under exclusive licenses to Warner Music India </p>
+                  </div>
+                </div>
+              </div>
+              {/* More by Artist */}
+              <div className="w-[100%] h-[20.625rem] mt-12 mb-4">
+                <section className="w-[100%] h-[20.625rem]">
+                  {/* More by Artist */}
+                  <div className="w-[100%] h-[2.875rem]">
+                    <div className="mb-4 w-[100%] h-[1.875rem] ">
+                      {musicObj?.type === "song" ? <ArtistNameHeading artistObj={musicObj?.artist} />: <ArtistNameHeading artistObj={musicObj?.artists} />}
+                    </div>
+                  </div>
+                  {/* More Song Card of Artist */}
+                  <div className="w-[100%]  flex flex-wrap gap-6">
+                    <MoreArtistSong musicObj={musicObj} headers={headers} handleSearchId={handleSearchId} handleQueryType={handleQueryType} />
+                  </div>
+                </section>
+              </div>           
+            </div>  
+          </div>
+        </section> 
       </div>
+      <Footer />
+    </div>
     </>
   );
 }
@@ -777,37 +699,3 @@ function CurrentSongArtists({ albumArtists, artistId }) {
   );
 }
 
-function ResponsiveTitle({ maxWidth, height, title }) {
-  const titleRef = useRef();
-
-  useEffect(() => {
-    function adjustFontSize() {
-      const h1 = titleRef.current;
-      const fontSize = parseInt(window.getComputedStyle(h1).fontSize);
-      // console.log("fontSize",fontSize);
-      // console.log(h1.offsetWidth, " ", maxWidth);
-
-      while (h1.offsetWidth > maxWidth && fontSize > 0) {
-        // console.log("while loop entered");
-        // console.log(h1.offsetWidth,"Inside while");
-        fontSize -= 1;
-        h1.style.fontSize = fontSize + "px";
-      }
-    }
-    // window.addEventListener("load", adjustFontSize);
-    // adjustFontSize();
-
-    // return () => {
-    //   window.removeEventListener('load', adjustFontSize); // Clean up the event listener
-    // };
-  }, []);
-
-  return (
-    <h1
-      ref={titleRef}
-      className={`mt-2 mb-3 h-[${height}rem] font-extrabold text-[96px] flex items-center whitespace-nowrap overflow-hidden`}
-    >
-      {title}
-    </h1>
-  );
-}
