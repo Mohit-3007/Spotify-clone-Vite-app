@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
+import { BsSpotify } from "react-icons/bs";
 import headers from "../assets/config";
 import MusicCard from "./MusicCard";
 import ArtistCard from "./ArtistCard";
@@ -118,7 +119,6 @@ export default function SpotifyDashboard() {
 
   function handlePopRender(){
     setPopSetting(!popSetting);
-    
   }
   
   function handleLogin() {
@@ -135,7 +135,13 @@ export default function SpotifyDashboard() {
       {/* <div className="max-sm:w-screen w-full h-[calc(100%-64px)] bg-[#121212] overflow-y-scroll " > */}
       <div className={"max-sm:w-screen w-[calc(100%-307px)] h-[calc(100%-64px)] absolute top-[72px] left-0 sm:left-[18.6875rem] bg-[#121212] " + (login ? "max-sm:top-0" : "max-sm:top-[56px]")}>
 
-        {/* Music Containers */}
+         {/* Spotify Logo */}
+         <div className={"w-full h-6 sm:hidden " + (popSetting ? "hidden" : "")}>
+          <Link className="w-[7.875rem] h-6 mt-2 px-6 flex justify-start items-center text-white font-figtree font-medium">
+            <BsSpotify className="w-6 h-6 mr-1" /> <span className="flex justify-center items-center text-sm">Spotify</span>
+          </Link>
+        </div>
+
         {login && (
           <Greeting 
             handlePopRender={handlePopRender}
@@ -154,26 +160,26 @@ export default function SpotifyDashboard() {
 
               {/* Popular Artist */}
               <section className="mb-4 font-figtree">
-                  {/* Title */}
-                  <div className="max-sm:mt-6 max-sm:pl-2 max-sm:mb-3 sm:mb-2">
-                    <div className="h-[1.875rem] sm:mb-4 flex justify-between">
-                      <Link to={"/more-artist"} className="max-w-[80.5938rem] h-[1.875rem] cursor-pointer ">
-                        <h2 className="max-w-fit h-[1.4812rem] text-white font-bold text-2xl hover:underline">Popular artists</h2>
-                      </Link>
-                      <Link to={"/more-artist"} className="hidden sm:block ml-2 w-[3.4375rem] h-[1.875rem]">
-                        <span className="w-[3.4375rem] h-[1.875rem] font-bold text-sm hover:underline cursor-pointer text-[#A7A7A7]">Show all</span>
-                      </Link>
-                    </div>
+                {/* Title */}
+                <div className="max-sm:mt-6 max-sm:pl-2 max-sm:mb-3 sm:mb-2">
+                  <div className="h-[1.875rem] sm:mb-4 flex justify-between">
+                    <Link to={"/more-artist"} className="max-w-[80.5938rem] h-[1.875rem] cursor-pointer ">
+                      <h2 className="max-w-fit h-[1.4812rem] text-white font-bold text-2xl hover:underline">Popular artists</h2>
+                    </Link>
+                    <Link to={"/more-artist"} className="hidden sm:block ml-2 w-[3.4375rem] h-[1.875rem]">
+                      <span className="w-[3.4375rem] h-[1.875rem] font-bold text-sm hover:underline cursor-pointer text-[#A7A7A7]">Show all</span>
+                    </Link>
                   </div>
+                </div>
 
-                  {/* ArtistCard */}
-                  <div className="max-sm:h-[12.375rem] sm:h-[calc-[100%-46px]] max-w-fit max-sm:overflow-x-scroll max-sm:no-scrollbar max-sm:overflow-y-hidden max-sm:flex sm:gap-6 md:flex sm:flex-wrap gap-y-3 md:gap-y-6">
-                    {artistData.data &&
-                      artistData.data.map((each)=>{
-                        return <ArtistCard key={each._id} artistObj={each} />
-                      })
-                    }
-                  </div>
+                {/* ArtistCard */}
+                <div className="max-sm:h-[12.375rem] sm:h-[calc-[100%-46px]] max-w-fit max-sm:overflow-x-scroll max-sm:no-scrollbar max-sm:overflow-y-hidden max-sm:flex sm:gap-6 md:flex sm:flex-wrap gap-y-3 md:gap-y-6">
+                  {artistData.data &&
+                    artistData.data.map((each)=>{
+                      return <ArtistCard key={each._id} artistObj={each} />
+                    })
+                  }
+                </div>
 
               </section>
 
@@ -265,7 +271,7 @@ function Greeting({handlePopRender, popSetting}) {
   }
 
   return (
-    <div className={"sm:hidden h-[72px] max-sm:p-2 px-6 flex items-center justify-between " + (popSetting ? "bg-black" : "")}>
+    <div className={"sm:hidden h-[50px]  px-6 flex items-center justify-between " + (popSetting ? "bg-black" : "")}>
       <h1 className="text-2xl font-bold hover:underline cursor-pointer font-figtree text-white">{popSetting ? "" : greeting}</h1>
       <button className="sm:hidden w-12 h-12 p-3 flex justify-center items-center" onClick={handlePopRender}>
         {popSetting ? <RxCross1 className="stroke-2 stroke-white h-6 w-6 hover:scale-105 " /> :

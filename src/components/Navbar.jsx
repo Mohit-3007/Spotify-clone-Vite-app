@@ -7,9 +7,9 @@ import { CiSearch } from "react-icons/ci";
 import { FiExternalLink } from "react-icons/fi";
 import { GoBellFill, GoPersonFill } from "react-icons/go";
 import { RxCross1 } from "react-icons/rx";
+import headers from '../assets/config';
 
- const Navbar = () => {
- 
+ const Navbar = ({handleShowSearchResult, handleHideSearchResult, showSearchRes}) => {
   const [expand, setExpand] = useState(false);
   const location = useLocation();
   const { handleLoginState, login } = useContextProvider();
@@ -18,20 +18,51 @@ import { RxCross1 } from "react-icons/rx";
   const inputRef = useRef();
   const profileRef = useRef();
   const [ popSettingDiv, setPopSettingDiv ] = useState(false);
-  const [inputVal, setInputVal] = useState(" ");
+  const [inputVal, setInputVal] = useState("");
+  // let timer;
 
-  // console.log('Navbar expand', expand);
-
-  const handleEnterKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      console.log('Enter key pressed! Input value: ', inputVal.length);
+  function handleKeyDown(e){
+    if(e.key == "Enter" && inputVal.length != 0){
+      console.log("make fetch call");
       makeFetchCall()
-      setInputVal('');
+      handleShowSearchResult()
+    }
+  }
+  const handleOnInputChange = (e) => {
+    setInputVal(e.target.value);
+    // clearTimeout(timer);
+    // debouncedFunction(e);
+  }
+  const debouncedFunction = DebouncingFunction(makeFetchCall, 2000)
+  function DebouncingFunction(func, delay){
+    let timer;
+    return function(){
+      let args = arguments;
+      let context = this;
+      clearTimeout(timer);
+      timer = setTimeout(()=>{
+        func.apply(context, args);
+      }, delay)
     }
   }
 
-  function makeFetchCall(){
-      
+  function handleCrossClick(){
+    setInputVal("");
+    if(showSearchRes) handleHideSearchResult();
+
+  }
+
+  async function makeFetchCall(){
+    console.log('Enter key pressed! Input value: ', inputVal);
+    const reqOptions = {
+      "method": "GET",
+      headers,
+    }
+    const url = `https://academics.newtonschool.co/api/v1/music/song?filter={"title":"${inputVal}"}`
+    const resp = await fetch(url,reqOptions);
+    console.log(resp);
+    const res = await resp.json();
+    console.log(res);
   }
 
   useEffect(() => {
@@ -121,8 +152,9 @@ import { RxCross1 } from "react-icons/rx";
           <>
             { location.pathname === "/search"  && (
               <div className="hidden sm:block h-12 w-[46.75rem] mr-[1.125rem] relative">
-                <input ref={inputRef} className="w-[22.75rem] h-full bg-[#2A2A2A] rounded-3xl py-1.5 px-3 flex justify-center items-center 
-                gap-1.5 placeholder:text-[#757575] font-figtree bg-inherit text-sm pl-8 text-white" placeholder="What do you want to listen to?" type="text">
+                <input ref={inputRef} className="w-[22.75rem] h-full bg-[#2A2A2A] rounded-3xl py-1.5 px-10 flex justify-center items-center 
+                  gap-1.5 placeholder:text-[#757575] font-figtree bg-inherit text-sm pl-9 text-white" 
+                  placeholder="What do you want to listen to?" type="text">
                 </input>
                 <span>
                     <CiSearch className="text-white text-xl absolute top-3.5 left-2" />
@@ -169,22 +201,21 @@ import { RxCross1 } from "react-icons/rx";
               <>
                 {/* Search Input */}
                 <div className="h-12 w-[872px] mr-[1.125rem] ml-2">
-
-                  <input ref={inputRef} value={inputVal} onChange={(e)=>setInputVal(e.target.value)} onKeyDown={handleEnterKeyPress}
-                  className="w-[22.75rem] h-full rounded-3xl py-1.5 px-3 bg-[#2e2d2d] flex justify-center items-center gap-1.5 placeholder:text-[#757575] font-figtree bg-inherit text-sm pl-8 text-white" 
-                  placeholder="What do you want to listen to?" type="text">
+                  <input ref={inputRef} value={inputVal} 
+                    onChange={e => handleOnInputChange(e)}
+                    onKeyDown={e => handleKeyDown(e)}
+                    className="w-[22.75rem] h-full rounded-3xl py-1.5 pr-10 outline-none focus:outline focus:outline-[0.8px] focus:outline-white bg-[#242424] flex justify-center items-center gap-1.5
+                     placeholder:text-[#757575] font-figtree text-sm pl-9 text-white" 
+                    placeholder="What do you want to listen to?" type="text">
                   </input>
-
                   <span>
-                      <CiSearch className="text-white text-xl absolute top-[1.375rem] left-[108px]" />
+                    <CiSearch className="text-white text-xl absolute top-[1.375rem] left-[108px]" />
                   </span>
-
                   {inputVal.length > 0 && (
-                    <span onClick={() => setInputVal("")}>
-                      <RxCross1 className="text-white text-xl absolute top-[1.375rem] left-[425px]" />
+                    <span onClick={handleCrossClick}>
+                      <RxCross1 className="text-white cursor-pointer text-xl absolute top-[1.375rem] left-[425px]" />
                     </span>
                   )}
-
                 </div>
               </>
             )}

@@ -7,10 +7,13 @@ import Sidebar from "./Sidebar";
 import MusicComponent from "./MusicComponent";
 import BottomBar from "./BottomBar";
 import { useContextProvider } from "./ContextProvider/AppContextProvider";
+import SearchResult from "./SearchResult";
+
 
 export default function SearchPage() {
     const { login } = useContextProvider();
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [showSearchRes , setShowSearchRes] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -24,13 +27,21 @@ export default function SearchPage() {
         };
     }, []);
 
+    function handleShowSearchResult(){
+        setShowSearchRes(true);
+    }
+    function handleHideSearchResult(){
+        setShowSearchRes(false);
+    }
+
  
     return (
         <>
         <Sidebar />
-        {screenWidth < 640 ? "" : <Navbar />}
-        {/* <Navbar /> */}
-        <CardObj /> 
+        {screenWidth < 640 ? "" :
+            <Navbar handleShowSearchResult={handleShowSearchResult} handleHideSearchResult={handleHideSearchResult} showSearchRes={showSearchRes} />}
+
+        {showSearchRes == true ? <SearchResult /> : <CardObj />  }
         <MusicComponent />
 
         {/* For small screens */}

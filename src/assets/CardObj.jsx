@@ -279,7 +279,6 @@ export default function CardObj() {
 
   function handleCardClick({cardName}){
     console.log(cardName, " handleCardClick");
-
     switch (cardName) {
       case "Made for you":
         navigate("/more-made4u")
@@ -320,19 +319,15 @@ export default function CardObj() {
     <>
       {/* w-[87.4087rem] */}
       <div className="max-sm:w-screen w-[calc(100%-307px)] h-fit absolute top-0 sm:top-[4.5rem] left-0 sm:left-[18.6875rem] bg-[#121212]">
-
         {/* Main Content */}
         <div className="w-[100%] px-4 sm:px-6">
-
           {/* sm:screen Search Heading */}
           <h1 className="sm:hidden w-[100%] h-8 mt-8 mb-4 font-figtree font-bold text-3xl text-white">Search</h1>
-
           {/* sm:screen Search Bar */}
           <button className="sm:hidden w-full h-11 px-4 bg-white font-semibold text-sm text-black rounded-sm
             flex items-center cursor-pointer" onClick={()=> setShowSearchBox(true)}>
             <BsSearch className="w-[22px] h-[22px] text-black mr-2 stroke-[0.5]" />What do you want to listen to?
           </button>
-
           {/* Browse all */}
           <div className="mt-5 sm:mt-4">
             <div className="mb-6 sm:mb-4 h-[1.8125rem]">
@@ -340,8 +335,7 @@ export default function CardObj() {
                 Browse all
               </h2>
             </div>
-          </div>
-          
+          </div>  
           {/* Cards Map Function */}
           <div className="w-[100%] flex justify-between flex-wrap gap-4 sm:gap-5">
             {cardObj.map((card, index) => {
@@ -352,19 +346,12 @@ export default function CardObj() {
                   className="w-[46.24%] sm:w-[10.8125rem] h-[92px] sm:h-[10.8125rem] rounded-xl sm:py-4 sm:px-3 text-center flex items-center justify-center"
                   onClick={() => handleCardClick({ cardName: card.heading }) }
                   >        
-                    <span
-                      className="text-white font-figtree
-                            text-2xl font-semibold">
-                      {card.heading}
-                    </span>
+                    <span className="text-white font-figtree text-2xl font-semibold">{card.heading}</span>
                 </div>
               );
-
             })}
           </div>
-
         </div>
-
         {/* sm:screen Search Page rendered on Click */}
         <div className={"w-[100%] h-full fixed top-0 left-0 sm:hidden z-10 bg-[#121212] " + (showSearchBox ? "block" : "hidden")} >
           {/* Search Input */}
@@ -380,7 +367,6 @@ export default function CardObj() {
             </div>
           </div>
         </div>
-
         <Footer />
       </div>
     </>

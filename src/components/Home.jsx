@@ -56,7 +56,9 @@ export default function Home() {
       <Sidebar />
       {/* For small screens*/}
       {login && screenWidth > 640 ? <Navbar /> : null}  
+
       {!login && <Navbar /> }
+      
       { path === "/" ? <SpotifyDashboard /> :
         path === "/more-made4u" ? <MoreMade4U /> :
         path === "/more-new-releases" ? <MoreNewReleases /> :
@@ -78,28 +80,5 @@ export default function Home() {
   );
 }
 
-// {
-//   <div className="flex flex-col w-[calc(100%-291px)] h-full">
-//           {/* For small screens*/}
-//           {login && screenWidth > 640 ? <Navbar /> : null}
 
-//           {!login && <Navbar /> }
-
-//           { path === "/" ? <SpotifyDashboard /> :
-//             path === "/more-made4u" ? <MoreMade4U /> :
-//             path === "/more-new-releases" ? <MoreNewReleases /> :
-//             path === "/more-trending-songs" ? <MoreTrendingSongs /> :
-//             path === "/more-soul-soother" ? <MoreSoulSoother /> :
-//             path === "/more-evergreen-melodies" ? <MoreEvergreenMelodies /> :
-//             path === "/more-happy" ? <MoreHappy /> :
-//             path === "/more-romantic" ? <MoreRomantic /> :
-//             path === "/more-sad" ? <MoreSad /> :
-//             path === "/more-excited" ? <MoreExcited /> :
-//             path === "/more-artist" ? <MoreArtist /> :
-//             path === "/liked-songs" ? <LikedSongs /> :
-//             path === "/artist-track" ? <ArtistTrack /> :
-//             <SongTrack /> 
-//           }
-//         </div>
-// }
 
