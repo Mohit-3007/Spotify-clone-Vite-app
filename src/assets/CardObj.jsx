@@ -4,11 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { BsHeartFill, BsSpotify, BsSearch } from "react-icons/bs";
 import { IoArrowBack } from "react-icons/io5";
 
-
-
 export default function CardObj() {
   const navigate = useNavigate();
-  const [ showSearchBox,  setShowSearchBox ] = useState(false)
+  const [showSearchBox, setShowSearchBox] = useState(false);
 
   const cardObj = [
     {
@@ -277,56 +275,65 @@ export default function CardObj() {
     },
   ];
 
-  function handleCardClick({cardName}){
+  function handleCardClick({ cardName }) {
     console.log(cardName, " handleCardClick");
     switch (cardName) {
       case "Made for you":
-        navigate("/more-made4u")
+        navigate("/more-made4u");
         break;
       case "New releases":
-        navigate("/more-new-releases")
+        navigate("/more-new-releases");
         break;
       case "Trending":
-        navigate("/more-trending-songs")
+        navigate("/more-trending-songs");
         break;
       case "Soul":
-        navigate("/more-soul-soother")
+        navigate("/more-soul-soother");
         break;
       case "Evergreen":
-        navigate("/more-evergreen-melodies")
+        navigate("/more-evergreen-melodies");
         break;
       case "Party":
-        navigate("/more-happy")
+        navigate("/more-happy");
         break;
       case "Love":
-        navigate("/more-romantic")
+        navigate("/more-romantic");
         break;
       case "Rock":
-        navigate("/more-excited")
+        navigate("/more-excited");
         break;
       case "Sad":
-        navigate("/more-sad")
+        navigate("/more-sad");
         break;
       case "Artist":
-        navigate("/more-artist")
+        navigate("/more-artist");
         break;
       default:
-        navigate("/stay-tuned")
+        navigate("/stay-tuned");
     }
   }
 
   return (
     <>
-      {/* w-[87.4087rem] */}
-      <div className="max-sm:w-screen w-[calc(100%-307px)] h-fit absolute top-0 sm:top-[4.5rem] left-0 sm:left-[18.6875rem] bg-[#121212]">
+      <div
+        className="max-sm:w-screen w-[calc(100%-307px)] h-[calc(100vh-160px)] rounded-b-md absolute top-0 sm:top-[4.5rem] z-10
+       left-0 sm:left-[18.6875rem] bg-[#121212] overflow-y-scroll "
+      >
         {/* Main Content */}
-        <div className="w-[100%] px-4 sm:px-6">
+        {/* <div className="w-[100%] px-4 sm:px-6 box-content "> */}
+        <div className="w-[100%] pl-4 pr-1 sm:pl-6 sm:pr-3">
           {/* sm:screen Search Heading */}
-          <h1 className="sm:hidden w-[100%] h-8 mt-8 mb-4 font-figtree font-bold text-3xl text-white">Search</h1>
+          <h1 className="sm:hidden w-[100%] h-8 mt-8 mb-4 font-figtree font-bold text-3xl text-white">
+            Search
+          </h1>
           {/* sm:screen Search Bar */}
-          <button className="sm:hidden w-full h-11 px-4 bg-white font-semibold text-sm text-black rounded-sm
-            flex items-center cursor-pointer" onClick={()=> setShowSearchBox(true)}>
-            <BsSearch className="w-[22px] h-[22px] text-black mr-2 stroke-[0.5]" />What do you want to listen to?
+          <button
+            className="sm:hidden w-full h-11 px-4 bg-white font-semibold text-sm text-black rounded-sm
+                flex items-center cursor-pointer"
+            onClick={() => setShowSearchBox(true)}
+          >
+            <BsSearch className="w-[22px] h-[22px] text-black mr-2 stroke-[0.5]" />
+            What do you want to listen to?
           </button>
           {/* Browse all */}
           <div className="mt-5 sm:mt-4">
@@ -335,7 +342,7 @@ export default function CardObj() {
                 Browse all
               </h2>
             </div>
-          </div>  
+          </div>
           {/* Cards Map Function */}
           <div className="w-[100%] flex justify-between flex-wrap gap-4 sm:gap-5">
             {cardObj.map((card, index) => {
@@ -344,26 +351,40 @@ export default function CardObj() {
                   key={index}
                   style={{ backgroundColor: card.color }}
                   className="w-[46.24%] sm:w-[10.8125rem] h-[92px] sm:h-[10.8125rem] rounded-xl sm:py-4 sm:px-3 text-center flex items-center justify-center"
-                  onClick={() => handleCardClick({ cardName: card.heading }) }
-                  >        
-                    <span className="text-white font-figtree text-2xl font-semibold">{card.heading}</span>
+                  onClick={() => handleCardClick({ cardName: card.heading })}
+                >
+                  <span className="text-white font-figtree text-2xl font-semibold">
+                    {card.heading}
+                  </span>
                 </div>
               );
             })}
           </div>
         </div>
         {/* sm:screen Search Page rendered on Click */}
-        <div className={"w-[100%] h-full fixed top-0 left-0 sm:hidden z-10 bg-[#121212] " + (showSearchBox ? "block" : "hidden")} >
+        <div
+          className={
+            "w-[100%] h-full fixed top-0 left-0 sm:hidden z-10 bg-[#121212] " +
+            (showSearchBox ? "block" : "hidden")
+          }
+        >
           {/* Search Input */}
           <div className="w-full h-[4.5rem] p-3 flex items-center">
             {/* back arrow */}
-            <button className="w-12 h-12 p-2 flex justify-center items-center cursor-pointer" onClick={()=> setShowSearchBox(false)}>
+            <button
+              className="w-12 h-12 p-2 flex justify-center items-center cursor-pointer"
+              onClick={() => setShowSearchBox(false)}
+            >
               <IoArrowBack className="w-9 h-9 text-white" />
             </button>
             {/* search input box */}
             <div className="w-[calc(100%-48px)] h-[38px] bg-white rounded-sm flex relative">
-               <BsSearch className="absolute top-[11px] left-3 w-5 h-5 text-[#4b4848] mr-2 stroke-[0.5]" />
-              <input type="text" placeholder="What do you want to listen to?" className="w-full h-full px-10 py-2 placeholder:text-[#717070]" />
+              <BsSearch className="absolute top-[11px] left-3 w-5 h-5 text-[#4b4848] mr-2 stroke-[0.5]" />
+              <input
+                type="text"
+                placeholder="What do you want to listen to?"
+                className="w-full h-full px-10 py-2 placeholder:text-[#717070]"
+              />
             </div>
           </div>
         </div>
